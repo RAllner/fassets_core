@@ -59,6 +59,13 @@ describe LabelsController do
       it { response.should redirect_to "/somewhere" }
       it { request.flash[:error].should =~ /^Label could not be updated! Caption cannot be empty!$/ }
     end
+
+    context "JSON format" do
+      it "should render nothing" do
+        put 'update', params.merge({ :format => :json })
+        response.should be_success
+      end
+    end
   end
 
   describe "PUT 'sort'" do

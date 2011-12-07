@@ -12,7 +12,7 @@ class LabelsController < FassetsCore::ApplicationController
         flash[:error] = "Label could not be created! Caption cannot be empty!"
       else
         flash[:error] = "Label could not be created!"
-      end      
+      end
       redirect_to :back
     end
   end
@@ -21,10 +21,13 @@ class LabelsController < FassetsCore::ApplicationController
       flash[:error] = "Label could not be updated! Caption cannot be empty!"
       redirect_to :back
       return
-    end            
+    end
     @label.update_attributes(params[:label])
     flash[:notice] = "Label was successfully updated."
-    redirect_to edit_catalog_facet_path(params[:catalog_id], params[:facet_id])    
+    respond_to do |format|
+      format.html { redirect_to edit_catalog_facet_path(params[:catalog_id], params[:facet_id]) }
+      format.json { render :nothing => true }
+    end
   end
   def sort
     params[:label].each_with_index do |id, position|
