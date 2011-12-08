@@ -53,7 +53,7 @@ describe LabelsController do
       let(:params) do
         Label.create!(:caption => "TestLabel")
         { :id => 1,
-          :label => {}}.merge(context_params)
+          :label => {:caption => ""}}.merge(context_params)
       end
 
       it { response.should redirect_to "/somewhere" }
@@ -64,6 +64,11 @@ describe LabelsController do
       it "should render nothing" do
         put 'update', params.merge({ :format => :json })
         response.should be_success
+      end
+
+      it "should return an error when caption is empty" do
+        put 'update', context_params.merge({ :format => :json, :id => 1, :label => {:caption => ""} })
+        response.code.should == "422"
       end
     end
   end
