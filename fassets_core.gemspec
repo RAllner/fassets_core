@@ -21,11 +21,7 @@ Gem::Specification.new do |s|
   s.add_dependency "haml"
   s.add_dependency "sqlite3"
   s.add_dependency "mime-types"
-  s.add_dependency "carrierwave"
-  s.add_dependency "mini_magick"
-  s.add_dependency "streamio-ffmpeg"
   s.add_dependency "fancybox-rails"
-  s.add_dependency "wikipedia-client"
 
   s.add_development_dependency "devise"
   s.add_development_dependency "guard-rspec"

@@ -57,15 +57,7 @@ class AssetsController < FassetsCore::ApplicationController
     return Asset.find(params[:id]).content_type.constantize
   end
   def add_asset_box
-    if params[:type] == "url"
-      @content = Url.new
-    elsif params[:type] == "presentation"
-      @content = FassetsPresentations::Presentation.new
-    elsif params[:type] == "code"
-      @content = Code.new
-    else
-      @content = FileAsset.new
-    end
+    @content = Url.new
     render :template => "assets/add_asset_box", :layout => false, :locals => {:selected_type => params[:type] ? params[:type] : "local"}
   end
   def classifications
