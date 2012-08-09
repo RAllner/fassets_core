@@ -1,4 +1,12 @@
 $(function(){
+  $( "#facets" ).sortable({
+    axis: "y",
+    handle: ".handle",
+    update: function (e, ui){
+      $.post($(this).data('update-url'), $(this).sortable('serialize')+"&catalog_id="+$(this).data('catalog_id'))
+    }  
+  });
+  
   $("#assets li.asset").draggable({
     handle: ".handle",
     helper: "clone",
