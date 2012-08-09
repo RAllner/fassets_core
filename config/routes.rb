@@ -10,6 +10,12 @@ Rails.application.routes.draw do
     put :add_asset
   end
 
+  resources :facets do
+    collection do
+      post :sort
+    end
+  end
+
   resources :classifications
 
   resources :users do
