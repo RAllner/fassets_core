@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :catalogs do
     resources :facets do
+      collection do
+        post :sort
+      end  
       resources :labels do
         collection do
           put :sort
@@ -8,12 +11,6 @@ Rails.application.routes.draw do
       end
     end
     put :add_asset
-  end
-
-  resources :facets do
-    collection do
-      post :sort
-    end
   end
 
   resources :classifications
