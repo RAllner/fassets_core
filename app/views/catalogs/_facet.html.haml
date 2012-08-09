@@ -1,4 +1,4 @@
-.facet
+%li.facet{:id => "facet_"+facet.id.to_s }
   .caption{:class => facet.color}
     =facet.caption
     -if user_signed_in?

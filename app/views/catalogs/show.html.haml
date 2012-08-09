@@ -12,8 +12,8 @@
       =form_for [@catalog, Facet.new], :url => catalog_facets_path(@catalog, Facet.new) do |f|
         =render :partial => "facets/form", :object => f
         =submit_tag "Create"
-  =render :partial => "facet", :collection => @catalog.facets
-
+  %ul#facets{"data-update-url" => sort_facets_url, "data-catalog_id" => @catalog.id}
+    =render :partial => "facet", :collection => @catalog.facets.all(:order => "position ASC")
 
 #catalog_main
   -if @filter.empty?
