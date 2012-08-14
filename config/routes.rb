@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :catalogs do
     resources :facets do
+      collection do
+        post :sort
+      end  
       resources :labels do
         collection do
           put :sort

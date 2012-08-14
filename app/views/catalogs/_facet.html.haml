@@ -1,8 +1,9 @@
-.facet
+%li.facet{:id => "facet_"+facet.id.to_s }
   .caption{:class => facet.color}
     =facet.caption
     -if user_signed_in?
       =link_to image_tag("fassets_core/edit.png"), edit_catalog_facet_path(@catalog, facet)
+      %span.handle=image_tag("fassets_core/drag.png")
   %ul{:class => "#{facet.color}_lite"}
     -facet.labels.each do |label|
       -if @counts[label.id] && !@filter.include?(label.id)

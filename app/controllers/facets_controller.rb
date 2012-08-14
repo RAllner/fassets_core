@@ -42,6 +42,13 @@ class FacetsController < FassetsCore::ApplicationController
     flash[:notice] = "Facet was successfully destroyed."
     redirect_to catalog_path(@catalog)
   end
+  def sort
+    @facetsInScope = Facet.where("catalog_id = ?", @catalog.id)	  
+    params[:facet].each_with_index do |id, index|
+      @facetsInScope.update(id, :position => index)     
+    end
+    render :nothing => true	  
+  end	  
   protected
   def find_catalog
     @catalog = Catalog.find(params[:catalog_id])
