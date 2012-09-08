@@ -135,6 +135,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  carrierwave
   devise
   fassets_core!
   haml
