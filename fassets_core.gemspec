@@ -28,4 +28,5 @@ Gem::Specification.new do |s|
   s.add_dependency "wikipedia-client"
 
   s.add_development_dependency "devise"
+  s.add_development_dependency "rspec-rails"
 end
