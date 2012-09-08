@@ -1,4 +1,4 @@
-shared_examples_for "every authenticated controller" do
+shared_examples "every authenticated controller" do
   def mock_user(stubs={})
     @mock_user ||= mock_model(User, stubs).as_null_object
   end
