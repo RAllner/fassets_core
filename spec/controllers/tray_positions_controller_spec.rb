@@ -5,7 +5,7 @@ describe TrayPositionsController do
     @mock_user = mock_model(User, {:tray_positions => double(TrayPosition, {:maximum => 1})}).as_null_object
   end
 
-  include_examples "every authenticated controller"
+  it_should_behave_like "every authenticated controller"
 
   describe "POST 'create'" do
     before(:each) do

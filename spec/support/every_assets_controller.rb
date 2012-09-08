@@ -1,7 +1,7 @@
 require 'rspec' # needed for rcov
 
 shared_examples_for "Every AssetsController" do
-  include_examples "every authenticated controller"
+  it_behaves_like "every authenticated controller"
 
   def setup_content
     my_a = asset

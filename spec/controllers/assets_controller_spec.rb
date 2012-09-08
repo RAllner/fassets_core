@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe AssetsController do
-  include_examples "every authenticated controller"
+  it_should_behave_like "every authenticated controller"
 
   describe "markup preview" do
     it "should render markup" do

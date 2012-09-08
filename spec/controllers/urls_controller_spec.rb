@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 require 'spec_helper'
 
 describe UrlsController do
@@ -5,7 +7,7 @@ describe UrlsController do
   let(:create_params) do
     {"url" => {:url => "http://example.com/"}}
   end
-  include_examples "Every AssetsController"
+  it_should_behave_like "Every AssetsController"
 
   describe "GET 'show'" do
 
