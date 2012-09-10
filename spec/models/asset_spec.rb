@@ -14,4 +14,9 @@ describe Asset do
     a = Asset.create(:name => "Testname")
     a.errors.messages.should == {:content_type => ["can't be blank"]}
   end
+
+  it "should not fail without a user assigned" do
+    a = Asset.create(:content => Url.create!(:url => "http://example.com"), :name => "Testname")
+    a.save!
+  end
 end
