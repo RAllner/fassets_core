@@ -53,9 +53,6 @@ class AssetsController < FassetsCore::ApplicationController
     @content = self.content_model.find(content_id)
     render :partial => content_model.to_s.underscore.pluralize + "/" + @content.media_type.to_s.underscore + "_preview"
   end
-  def markup_preview
-    render :inline => PandocRuby.convert(params["markup"], :from => :markdown, :to => :html)
-  end
   def content_model
     return Asset.find(params[:id]).content_type.constantize
   end
