@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120803150826) do
+ActiveRecord::Schema.define(:version => 20120910142105) do
 
   create_table "assets", :force => true do |t|
     t.string   "name"
@@ -72,6 +72,10 @@ ActiveRecord::Schema.define(:version => 20120803150826) do
     t.integer "asset_id"
     t.string  "clipboard_type"
     t.integer "clipboard_id"
+  end
+
+  create_table "urls", :force => true do |t|
+    t.string "url"
   end
 
   create_table "users", :force => true do |t|
