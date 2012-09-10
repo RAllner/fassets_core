@@ -2,14 +2,6 @@ require 'rspec' # needed for rcov
 
 shared_examples_for "Every AssetsController" do
   include_examples "every authenticated controller"
-  def setup_content
-    my_a = asset
-    my_a.stub!(:destroy)
-    my_a.stub!(:update_attributes) { true }
-    my_a.stub!(:asset) { double(Asset, :update_attributes => true) }
-    controller.stub!(:find_content) {}
-    controller.instance_eval { @content = my_a }
-  end
 
   describe "GET 'new'" do
     it "should be successful and render all partials" do
@@ -108,4 +100,19 @@ shared_examples_for "Every AssetsController" do
       end
     end
   end
+end
+
+module FassetsCore::TestHelpers
+  def setup_content
+    my_a = asset
+    my_a.stub!(:destroy)
+    my_a.stub!(:update_attributes) { true }
+    my_a.stub!(:asset) { double(Asset, :update_attributes => true) }
+    controller.stub!(:find_content) {}
+    controller.instance_eval { @content = my_a }
+  end
+end
+
+RSpec.configure do |config|
+  config.include FassetsCore::TestHelpers, :type => :controller
 end
