@@ -38,7 +38,8 @@ describe ClassificationsController do
   describe "POST 'update'" do
     let(:params) do
       {:id => 1,
-       :labels => []}
+       :labels => [],
+       :format => :js}
     end
     before(:each) { post 'update', params }
     it { request.flash[:notice] =~ /^Updated Classification$/ }
