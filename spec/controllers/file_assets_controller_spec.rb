@@ -5,6 +5,7 @@ describe FileAssetsController do
   let(:create_params) do
     {"file_asset" => {:file_file_name => "test.png"}}
   end
+  include_examples "every authenticated controller"
   it_should_behave_like "Every AssetsController"
 
   it "assigns content with FileAsset class" do

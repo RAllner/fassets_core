@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe CatalogsController do
-  it_should_behave_like "every authenticated controller"
+  include_examples "every authenticated controller"
 
   before(:each) do
     Catalog.create!({:title => "Testcatalog1"})

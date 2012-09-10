@@ -1,8 +1,6 @@
 require 'spec_helper'
 
 describe AssetsController do
-  it_should_behave_like "every authenticated controller"
-
   describe "markup preview" do
     it "should render markup" do
       post 'markup_preview', :markup => "# level 1 header"

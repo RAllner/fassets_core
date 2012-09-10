@@ -7,6 +7,7 @@ describe UrlsController do
   let(:create_params) do
     {"url" => {:url => "http://example.com/"}}
   end
+  include_examples "every authenticated controller"
   it_should_behave_like "Every AssetsController"
 
   describe "GET 'show'" do

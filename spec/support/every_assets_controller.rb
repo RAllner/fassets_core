@@ -1,8 +1,7 @@
 require 'rspec' # needed for rcov
 
 shared_examples_for "Every AssetsController" do
-  it_behaves_like "every authenticated controller"
-
+  include_examples "every authenticated controller"
   def setup_content
     my_a = asset
     my_a.stub!(:destroy)

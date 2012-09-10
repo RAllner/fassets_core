@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ClassificationsController do
-  it_should_behave_like "every authenticated controller"
+  include_examples "every authenticated controller"
 
   let(:url) do
     url = Url.new(:url => "http://example.com/")
