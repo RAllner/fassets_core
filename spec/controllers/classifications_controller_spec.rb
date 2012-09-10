@@ -5,13 +5,12 @@ describe ClassificationsController do
 
   let(:url) do
     url = Url.new(:url => "http://example.com/")
-    url.asset = Asset.create(:user => controller.current_user, :name => "TestAsset")
+    url.asset = Asset.create(:name => "TestAsset")
     url.save!
     url
   end
 
   before(:each) do
-    controller.current_user.stub!(:tray_positions) { double(TrayPosition, :maximum => nil) }
     Classification.create!({:asset => url.asset})
     Classification.create!({:asset => url.asset})
   end
