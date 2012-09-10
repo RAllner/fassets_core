@@ -12,7 +12,7 @@ describe TrayPositionsController do
       request.env["HTTP_REFERER"] = "http://test.host/"
       post 'create', { :user_id => 1, :tray_position => {:clipboard_type => 'something'} }
     end
-    it { response.should redirect_to(:back) }
+    it { response.should be_success }
     it "should capitalize the clipboard_type attribute" do
       TrayPosition.all.last.clipboard_type.should eq('something'.capitalize)
     end
