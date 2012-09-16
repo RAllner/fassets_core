@@ -31,6 +31,4 @@ Rails.application.routes.draw do
   match 'box_facet' => 'Catalogs#box_facet'
   match 'edit_box/:id' => 'Assets#edit_box'
   match 'add_asset_box' => 'Assets#add_asset_box'
-
-  root :to => "Catalogs#index"
 end
