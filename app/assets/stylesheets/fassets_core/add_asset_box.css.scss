@@ -16,7 +16,7 @@
         float: right;
         padding: .5em;
       }
-      #selected {
+      .selected {
         border: 1px solid white;
         border-right: 1px solid white;
         border-right-style: none;
@@ -47,7 +47,7 @@
   position: absolute;
   right: 10px;
   top: 5px;
-  width: 20%; 
+  width: 20%;
 }
 .wiki_results {
   display: inline;
