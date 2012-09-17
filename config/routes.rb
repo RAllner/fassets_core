@@ -30,5 +30,5 @@ Rails.application.routes.draw do
   match 'box_content' => 'Catalogs#box_content'
   match 'box_facet' => 'Catalogs#box_facet'
   match 'edit_box/:id' => 'Assets#edit_box'
-  match 'add_asset_box' => 'Assets#add_asset_box'
+  match 'add_asset_box' => 'assets#add_asset_box'
 end

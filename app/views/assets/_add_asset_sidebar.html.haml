@@ -1,1 +1,7 @@
 %ul.asset_type_list
+  - i=0
+  - @asset_types.each do |type|
+    %li.asset_type
+      .item
+        =link_to type[:name].to_s, "#", :class => selected_type == i ? "selected" : "", :data => { :asset_type => i}
+    - i+=1

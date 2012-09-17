@@ -13,23 +13,26 @@ $(document).ready(function(){
     var f_height = $(window).height()*0.8;
     $("#add_asset_content").css("left",$("#catalog_list").width()+10);
     $("#add_asset_content").css("width",$("#fancybox-content").width()-$("#catalog_list").width()-30-$("#facets").width());
-	  $.ajax({
-		  type		: "GET",
-		  cache	: false,
-		  url		: "/add_asset_box",
-		  success: function(data) {
-			  $.fancybox({
+    $.ajax({
+      type : "GET",
+      cache : false,
+      url : "/add_asset_box",
+      success: function(data) {
+        $.fancybox({
           content: data,
           padding: 0,
           autoDimensions: false,
           width: f_width,
           height: f_height,
-          onComplete: function(){$("#fancybox-content").data("box-type","add_asset");}
+          onComplete: function(){
+            $("#fancybox-content").data("box-type","add_asset");
+            adjust_links();
+            $.fancybox.resize();
+          }
         });
-        adjust_links();
-        $.fancybox.resize();
-		  }
-	  });
+
+      }
+    });
   };
   $(window).keydown(function(event){
     switch(event.keyCode) {
@@ -50,8 +53,10 @@ $(document).ready(function(){
       $("#fancybox-content li.asset_type").click(function(event){
         event.preventDefault();
         $.fancybox.showActivity();
-        var type = event.target.href.split("=")[1];
-        $("#fancybox-content").load("/add_asset_box?type="+type);
+        asset_type = $(event.target).data("asset-type");
+        $("#fancybox-content").load("/add_asset_box", {type: asset_type}, function() {
+          adjust_links();
+        });
         $.fancybox.resize();
         $.fancybox.hideActivity();
       });
@@ -76,12 +81,7 @@ $(document).ready(function(){
       });
       $("form.edit_classification input[type=submit][value=Save]").hide();
     };
-  $(document).ajaxStop(function() {
-    if($("#fancybox-content").data("box-type") == "add_asset"){
-      adjust_links();
-      $.fancybox.resize();
-    }
-  });
+
   $("#new_asset_link").click(function(event){
     event.preventDefault();
     show_asset_box();

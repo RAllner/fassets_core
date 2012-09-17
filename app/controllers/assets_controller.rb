@@ -55,8 +55,11 @@ class AssetsController < FassetsCore::ApplicationController
     return Asset.find(params[:id]).content_type.constantize
   end
   def add_asset_box
-    @content = Url.new
-    render :template => "assets/add_asset_box", :layout => false, :locals => {:selected_type => params[:type] ? params[:type] : "local"}
+    @asset_types = FassetsCore::Plugins::all
+    selected_type = params[:type].to_i
+    selected_type ||= 0
+    @content = @asset_types[selected_type][:class].new unless @asset_types[selected_type].nil?
+    render :template => "assets/add_asset_box", :layout => false, :locals => {:selected_type => selected_type}
   end
   def classifications
     @content = Asset.find(params[:id]).content

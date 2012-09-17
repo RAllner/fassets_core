@@ -4,4 +4,4 @@
   =render :partial => "add_asset_sidebar", :locals => {:selected_type => selected_type}
 
 #add_asset_content
-  =render :template => "assets/new", :locals => {:new => true}
+  =render :template => "assets/new", :locals => {:new => true} unless @content.nil?
