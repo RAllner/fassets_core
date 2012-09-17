@@ -112,6 +112,10 @@ module FassetsCore::TestHelpers
     controller.instance_eval { @content = my_a }
   end
 
+  def root_path
+    "/"
+  end
+
   def additional_request_params
     {}
   end

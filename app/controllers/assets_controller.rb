@@ -46,7 +46,7 @@ class AssetsController < FassetsCore::ApplicationController
   def destroy
     flash[:notice] = "Asset has been deleted!"
     @content.destroy
-    redirect_to root_url
+    redirect_to main_app.root_url
   end
   def preview
     content_id = Asset.find(params[:id]).content_id
@@ -100,7 +100,7 @@ class AssetsController < FassetsCore::ApplicationController
     @content = self.content_model.find(content_id)
   rescue ActiveRecord::RecordNotFound => e
     flash[:error] = "#{self.content_model.to_s} with id #{params[:id]} not found"
-    redirect_to root_url
+    redirect_to main_app.root_url
   end
   def create_content_labeling(asset_id,catalog_id)
     asset = Asset.find(asset_id)
