@@ -83,6 +83,7 @@ class AssetsController < FassetsCore::ApplicationController
   def create_content_labeling(asset_id,catalog_id)
     asset = Asset.find(asset_id)
     content_facet = Facet.where(:catalog_id => catalog_id, :caption => "Content Type").first
+    return if content_facet.nil?
     content_facet.labels.each do |label|
       if asset.content_type == "FileAsset"
         if label.caption.downcase == asset.content.media_type
