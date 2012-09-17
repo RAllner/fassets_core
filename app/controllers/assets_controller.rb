@@ -1,7 +1,7 @@
 class AssetsController < FassetsCore::ApplicationController
   include AssetsHelper
   before_filter :authenticate_user!, :except => [:show]
-  before_filter :find_content, :except => [:new, :new_remote_file, :create, :preview, :markup_preview,:copy, :get_wiki_imgs, :search_wiki_imgs, :add_asset_box, :classifications, :edit_box]
+  before_filter :find_content, :except => [:new, :create, :add_asset_box, :classifications]
 
   def new
     @content = self.content_model.new
@@ -49,8 +49,6 @@ class AssetsController < FassetsCore::ApplicationController
     redirect_to main_app.root_url
   end
   def preview
-    content_id = Asset.find(params[:id]).content_id
-    @content = self.content_model.find(content_id)
     render :partial => content_model.to_s.underscore.pluralize + "/" + @content.media_type.to_s.underscore + "_preview"
   end
   def content_model
@@ -63,26 +61,6 @@ class AssetsController < FassetsCore::ApplicationController
   def classifications
     @content = Asset.find(params[:id]).content
     render :partial => "assets/classification"
-  end
-  def edit_box
-    if params["_"]
-      new_asset = true
-    else
-      new_asset = false
-    end
-    if params[:type] == "FileAsset"
-      @content = FileAsset.find(params[:id])
-    elsif params[:type] == "Url"
-      @content = Url.find(params[:id])
-    elsif params[:type] == "Presentation"
-      @content = FassetsPresentations::Presentation.find(params[:id])
-    elsif params[:type] == "Code"
-      #@content = FassetsCodeAssets::Code.find(params[:id])
-      @content = Code.find(params[:id])
-    else
-      @content = FileAsset.find(params[:id])
-    end
-    render :template => 'assets/edit', :layout => false, :locals => {:new => new_asset}
   end
   protected
   def content_params
@@ -130,4 +108,3 @@ class AssetsController < FassetsCore::ApplicationController
     end
   end
 end
-
