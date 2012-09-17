@@ -78,13 +78,11 @@ shared_examples_for "Every AssetsController" do
       end
 
       it "should create a new asset" do
-        controller.stub!(:params) do
-          {"asset" => {"name" => "Test"},
-           "classification" => {}
-           }.merge(create_params)
-        end
+        p = {"asset" => {"name" => "Test"},
+             "classification" => {}
+            }.merge(create_params)
         controller.current_user.stub!(:tray_positions) { double(TrayPosition, :maximum => nil) }
-        get 'create', additional_request_params
+        post 'create', additional_request_params.merge(p)
         content = assigns(:content)
         content.errors.messages.should == {}
         request.flash[:notice].should =~ /^Created new asset!$/
@@ -92,10 +90,9 @@ shared_examples_for "Every AssetsController" do
       end
 
       it "should fail when asset cannot be saved" do
-        controller.stub!(:params) do
-          {"asset" => {"name" => "Test"}}
-        end
-        get 'create', additional_request_params
+        p = {"asset" => {"name" => "Test"},
+             "classification" => {}}
+        post 'create', additional_request_params.merge(p)
         response.should render_template 'assets/new'
       end
     end
@@ -107,8 +104,8 @@ module FassetsCore::TestHelpers
     my_a = asset
     my_a.stub!(:destroy)
     my_a.stub!(:update_attributes) { true }
-    my_a.stub!(:asset) { double(Asset, :update_attributes => true) }
-    controller.stub!(:find_content) {}
+    my_a.stub!(:asset) { double(Asset, :update_attributes => true, :name => "Example Asset") }
+    controller.stub!(:find_content) { }
     controller.instance_eval { @content = my_a }
   end
 
