@@ -34,15 +34,23 @@ describe AssetsController do
     context "HTML request" do
       it "should render assets/new template" do
         get 'new'
+        response.should be_success
         response.should render_template "assets/new"
+        response.should render_template "layouts/fassets_core/application"
+      end
+
+      it "should render without layout on demand" do
+        get 'new', {:content_only => true}
+        response.should be_success
+        response.should render_template "assets/new"
+        response.should_not render_template "layouts/fassets_core/application"
       end
     end
 
     context "JS request" do
       it "should render assets/new template" do
         get 'new', :format => :js
-        response.should be_success
-        response.should render_template "assets/new"
+        response.should_not be_success
       end
     end
 

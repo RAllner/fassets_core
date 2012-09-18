@@ -16,8 +16,7 @@ class AssetsController < FassetsCore::ApplicationController
       end
     end
     respond_to do |format|
-      format.html { render :template => 'assets/new' }
-      format.js { render :template => 'assets/new' }
+      format.html { render :template => 'assets/new', :layout => !(params["content_only"]) }
     end
   end
   def create

@@ -13,25 +13,20 @@ $(document).ready(function(){
     var f_height = $(window).height()*0.8;
     $("#add_asset_content").css("left",$("#catalog_list").width()+10);
     $("#add_asset_content").css("width",$("#fancybox-content").width()-$("#catalog_list").width()-30-$("#facets").width());
-    $.ajax({
-      type : "GET",
-      cache : false,
-      url : "assets/new",
-      success: function(data) {
-        $.fancybox({
-          content: data,
-          padding: 0,
-          autoDimensions: false,
-          width: f_width,
-          height: f_height,
-          onComplete: function(){
-            $("#fancybox-content").data("box-type","add_asset");
-            adjust_links();
-            $.fancybox.resize();
-          }
-        });
-
-      }
+    $.ajaxSetup({cache: false});
+    $.get('/assets/new', { content_only: true }, function(data) {
+      $.fancybox({
+        content: data,
+        padding: 0,
+        autoDimensions: false,
+        width: f_width,
+        height: f_height,
+        onComplete: function(){
+          $("#fancybox-content").data("box-type","add_asset");
+          adjust_links();
+          $.fancybox.resize();
+        }
+      });
     });
   };
   $(window).keydown(function(event){
@@ -54,7 +49,7 @@ $(document).ready(function(){
         event.preventDefault();
         $.fancybox.showActivity();
         asset_type = $(event.target).data("asset-type");
-        $("#fancybox-content").load("/add_asset_box", {type: asset_type}, function() {
+        $("#fancybox-content").load("/assets/new", {type: asset_type, content_only: true }, function() {
           adjust_links();
         });
         $.fancybox.resize();
