@@ -4,10 +4,12 @@ shared_examples_for "Every AssetsController" do
   include_examples "every authenticated controller"
 
   describe "GET 'new'" do
-    it "should be successful and render all partials" do
-      get 'new', additional_request_params
-      response.should be_success
-      response.should render_template("assets/new")
+    context "HTML request" do
+      it "should be successful and render all partials" do
+        get 'new', additional_request_params
+        response.should be_success
+        response.should render_template("assets/new")
+      end
     end
   end
 
