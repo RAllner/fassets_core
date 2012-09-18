@@ -8,9 +8,12 @@ class AssetsController < FassetsCore::ApplicationController
       @content = self.content_model.new
     else
       @asset_types = FassetsCore::Plugins::all
-      @selected_type = params[:type].to_i
-      @selected_type ||= 0
-      @content = @asset_types[@selected_type][:class].new unless @asset_types[@selected_type].nil?
+      type = @asset_types.select{ |t| t[:name] == params[:type]}.first
+      type ||= @asset_types.first if params[:type].nil?
+      unless type.nil?
+        @selected_type = type[:name]
+        @content = type[:class].new
+      end
     end
     respond_to do |format|
       format.html { render :template => 'assets/new' }

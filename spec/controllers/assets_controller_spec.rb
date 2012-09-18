@@ -27,7 +27,7 @@ describe AssetsController do
       get 'new'
       assigns(:content).should be_nil
       assigns(:asset_types).should == []
-      assigns(:selected_type).should == 0
+      assigns(:selected_type).should == nil
       response.should be_success
     end
 
@@ -59,26 +59,26 @@ describe AssetsController do
       it "should select the first entry as default content" do
         get 'new'
         assigns(:content).class.should == Url
-        assigns(:selected_type).should == 0
+        assigns(:selected_type).should == "Test1"
         FassetsCore::Plugins.stub!(:all) { [{:name => "Test2", :class => String}, {:name => "Test1", :class => Url}] }
         get 'new'
         assigns(:content).class.should == String
-        assigns(:selected_type).should == 0
+        assigns(:selected_type).should == "Test2"
       end
 
       it "should select entry selected by type parameter" do
-        get 'new', :type => 0
+        get 'new', :type => "Test1"
         assigns(:content).class.should == Url
-        assigns(:selected_type).should == 0
-        get 'new', :type => 1
+        assigns(:selected_type).should == "Test1"
+        get 'new', :type => "Test2"
         assigns(:content).class.should == String
-        assigns(:selected_type).should == 1
+        assigns(:selected_type).should == "Test2"
       end
 
       it "should fail when type is not registered" do
-        get 'new', :type => 2
+        get 'new', :type => "Test3"
         assigns(:content).should be_nil
-        assigns(:selected_type).should == 2
+        assigns(:selected_type).should be_nil
       end
     end
   end
