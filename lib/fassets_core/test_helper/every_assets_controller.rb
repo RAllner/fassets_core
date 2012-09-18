@@ -4,6 +4,16 @@ shared_examples_for "Every AssetsController" do
   include_examples "every authenticated controller"
 
   describe "GET 'new'" do
+    it "should assign content" do
+      get 'new', additional_request_params
+      assigns(:content).class.should == @controller.content_model
+    end
+
+    it "should not assign all asset types" do
+      get 'new', additional_request_params
+      assigns(:asset_types).should be_nil
+    end
+
     context "HTML request" do
       it "should be successful and render all partials" do
         get 'new', additional_request_params
