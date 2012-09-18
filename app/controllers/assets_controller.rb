@@ -16,12 +16,7 @@ class AssetsController < FassetsCore::ApplicationController
         @classification.save
         create_content_labeling(@content.asset.id, params["classification"]["catalog_id"])
         flash[:notice] = "Created new asset!"
-        if @content.asset.content_type == "Code"
-          data = {:edit_box_url => "/edit_box/"+@content.id.to_s, :content_type => "Code"}
-          format.json { render :json => [ data ].to_json }
-        else
-          format.json { render :json => [ @content.to_jq_upload ].to_json }
-        end
+        format.json { render :json => [ @content.to_jq_upload ].to_json }
         format.html { redirect_to edit_asset_content_path(@content) }
       else
         render :template => 'assets/new'
