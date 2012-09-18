@@ -29,7 +29,13 @@ describe AssetsController do
       assigns(:asset_types).should == []
       assigns(:selected_type).should == 0
       response.should be_success
-      response.should render_template "assets/new"
+    end
+
+    context "HTML request" do
+      it "should render assets/new template" do
+        get 'new'
+        response.should render_template "assets/new"
+      end
     end
 
     context "JS request" do
