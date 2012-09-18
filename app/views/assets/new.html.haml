@@ -6,7 +6,6 @@
 
 #main.fassets_core
   =form_for @content, :url => asset_content_path(@content),:html => {:multipart => true} do |f|
-    //=fields_for "#{@content.class.to_s.underscore}" do |asset|
     =render :partial => "shared/error", :locals => {:target => @content}
     =fields_for "asset" do |asset|
       %p
