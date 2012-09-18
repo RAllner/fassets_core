@@ -8,5 +8,7 @@
 //= require fancybox
 //= require_tree .
 //= require_self
-//
 
+$.ajaxSetup({ 'beforeSend': function(xhr) {
+   xhr.setRequestHeader("Accept", "text/javascript");
+}});
