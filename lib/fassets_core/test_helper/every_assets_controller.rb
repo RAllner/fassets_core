@@ -77,23 +77,27 @@ shared_examples_for "Every AssetsController" do
         assigns(:content).asset.name.should eq("Test")
       end
 
-      it "should create a new asset" do
-        p = {"asset" => {"name" => "Test"},
-             "classification" => {}
-            }.merge(create_params)
-        controller.current_user.stub!(:tray_positions) { double(TrayPosition, :maximum => nil) }
-        post 'create', additional_request_params.merge(p)
-        content = assigns(:content)
-        content.errors.messages.should == {}
-        request.flash[:notice].should =~ /^Created new asset!$/
-        response.should redirect_to controller.url_for(content) + "/edit"
+      let(:meta_data) do
+        {"asset" => {"name" => "Test"},
+         "classification" => {}}
       end
 
-      it "should fail when asset cannot be saved" do
-        p = {"asset" => {"name" => "Test"},
-             "classification" => {}}
-        post 'create', additional_request_params.merge(p)
-        response.should render_template 'assets/new'
+      context "HTML request" do
+        it "should create a new asset" do
+          p = meta_data.merge(create_params)
+          controller.current_user.stub!(:tray_positions) { double(TrayPosition, :maximum => nil) }
+          post 'create', additional_request_params.merge(p)
+          content = assigns(:content)
+          content.errors.messages.should == {}
+          request.flash[:notice].should =~ /^Created new asset!$/
+          response.should redirect_to controller.url_for(content) + "/edit"
+        end
+
+        it "should fail when asset cannot be saved" do
+          p = meta_data
+          post 'create', additional_request_params.merge(p)
+          response.should render_template 'assets/new'
+        end
       end
     end
   end
