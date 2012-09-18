@@ -1,5 +1,24 @@
 require 'spec_helper'
 
+describe UrlsController do
+  # this is a controller implemented within the dummy application and used for testing the
+  # "Every AssetsController" shared example
+
+  # Define an example asset that this controller should create
+  let(:asset) { double(Url, :id => 1, :url => "http://example.com/") }
+
+  # Define parameters that are send to the create action of the controller
+  # These are only the parameters specific to the object itself, no meta-data
+  # like asset.name or classifications is needed, here
+  let(:create_params) do
+    {"url" => {:url => "http://example.com/"}}
+  end
+
+  # include the shared examples provided by fassets_core TestHelper
+  include_examples "every authenticated controller"
+  it_should_behave_like "Every AssetsController"
+end
+
 describe AssetsController do
   include_examples "every authenticated controller"
 
