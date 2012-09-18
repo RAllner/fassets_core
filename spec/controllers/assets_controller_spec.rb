@@ -22,13 +22,22 @@ end
 describe AssetsController do
   include_examples "every authenticated controller"
 
-  context "add asset box" do
+  describe "GET new" do
     it "should have no registered plugins" do
-      get 'add_asset_box'
+      get 'new'
       assigns(:content).should be_nil
       assigns(:asset_types).should == []
+      assigns(:selected_type).should == 0
       response.should be_success
-      response.should render_template "assets/add_asset_box"
+      response.should render_template "assets/new"
+    end
+
+    context "JS request" do
+      it "should render assets/new template" do
+        get 'new', :format => :js
+        response.should be_success
+        response.should render_template "assets/new"
+      end
     end
 
     context "with a few plugins registered" do
@@ -37,28 +46,33 @@ describe AssetsController do
       end
 
       it "should have 2 registered plugins" do
-        get 'add_asset_box'
+        get 'new'
         assigns(:asset_types) == [{:name => "Test1", :class => Url}, {:name => "Test2", :class => String}]
       end
 
       it "should select the first entry as default content" do
-        get 'add_asset_box'
+        get 'new'
         assigns(:content).class.should == Url
+        assigns(:selected_type).should == 0
         FassetsCore::Plugins.stub!(:all) { [{:name => "Test2", :class => String}, {:name => "Test1", :class => Url}] }
-        get 'add_asset_box'
+        get 'new'
         assigns(:content).class.should == String
+        assigns(:selected_type).should == 0
       end
 
       it "should select entry selected by type parameter" do
-        get 'add_asset_box', :type => 0
+        get 'new', :type => 0
         assigns(:content).class.should == Url
-        get 'add_asset_box', :type => 1
+        assigns(:selected_type).should == 0
+        get 'new', :type => 1
         assigns(:content).class.should == String
+        assigns(:selected_type).should == 1
       end
 
       it "should fail when type is not registered" do
-        get 'add_asset_box', :type => 2
+        get 'new', :type => 2
         assigns(:content).should be_nil
+        assigns(:selected_type).should == 2
       end
     end
   end

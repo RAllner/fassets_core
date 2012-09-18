@@ -14,6 +14,11 @@ shared_examples_for "Every AssetsController" do
       assigns(:asset_types).should be_nil
     end
 
+    it "should not assign selected_type" do
+      get 'new', additional_request_params
+      assigns(:selected_type).should be_nil
+    end
+
     context "HTML request" do
       it "should be successful and render all partials" do
         get 'new', additional_request_params

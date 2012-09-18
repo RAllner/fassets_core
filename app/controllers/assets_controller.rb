@@ -1,11 +1,21 @@
 class AssetsController < FassetsCore::ApplicationController
   include AssetsHelper
   before_filter :authenticate_user!, :except => [:show]
-  before_filter :find_content, :except => [:new, :create, :add_asset_box, :classifications]
+  before_filter :find_content, :except => [:new, :create, :classifications]
 
   def new
-    @content = self.content_model.new
-    render :template => 'assets/new'
+    if self.respond_to?(:content_model)
+      @content = self.content_model.new
+    else
+      @asset_types = FassetsCore::Plugins::all
+      @selected_type = params[:type].to_i
+      @selected_type ||= 0
+      @content = @asset_types[@selected_type][:class].new unless @asset_types[@selected_type].nil?
+    end
+    respond_to do |format|
+      format.html { render :template => 'assets/new' }
+      format.js { render :template => 'assets/new' }
+    end
   end
   def create
     @content = self.content_model.new(content_params)
@@ -49,13 +59,6 @@ class AssetsController < FassetsCore::ApplicationController
   end
   def preview
     render :partial => content_model.to_s.underscore.pluralize + "/" + @content.media_type.to_s.underscore + "_preview"
-  end
-  def add_asset_box
-    @asset_types = FassetsCore::Plugins::all
-    selected_type = params[:type].to_i
-    selected_type ||= 0
-    @content = @asset_types[selected_type][:class].new unless @asset_types[selected_type].nil?
-    render :template => "assets/add_asset_box", :layout => false, :locals => {:selected_type => selected_type}
   end
   def classifications
     @content = Asset.find(params[:id]).content

@@ -16,7 +16,7 @@ $(document).ready(function(){
     $.ajax({
       type : "GET",
       cache : false,
-      url : "/add_asset_box",
+      url : "assets/new",
       success: function(data) {
         $.fancybox({
           content: data,
