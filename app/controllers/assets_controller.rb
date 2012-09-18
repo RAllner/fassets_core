@@ -16,10 +16,14 @@ class AssetsController < FassetsCore::ApplicationController
         @classification.save
         create_content_labeling(@content.asset.id, params["classification"]["catalog_id"])
         flash[:notice] = "Created new asset!"
-        format.json { render :json => [ @content.to_jq_upload ].to_json }
+        format.js { render :json => @content.to_jq_upload.merge({:status => :ok}).to_json }
         format.html { redirect_to edit_asset_content_path(@content) }
       else
-        render :template => 'assets/new'
+        flash[:error] = "Could not create asset!"
+        format.js { render :json => {:errors => @content.errors.messages}.to_json }
+        format.html do
+          render :template => 'assets/new'
+        end
       end
     end
   end

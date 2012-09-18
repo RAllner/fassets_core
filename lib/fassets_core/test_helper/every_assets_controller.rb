@@ -99,6 +99,23 @@ shared_examples_for "Every AssetsController" do
           response.should render_template 'assets/new'
         end
       end
+
+      context "JS request" do
+        it "should create a new asset" do
+          p = meta_data.merge(create_params).merge({:format => :js})
+          post 'create', additional_request_params.merge(p)
+          content = assigns(:content)
+          content.errors.messages.should == {}
+          JSON.parse(response.body).class.should == Hash
+          JSON.parse(response.body)["status"].should == "ok"
+        end
+
+        it "should fail when asset cannot be saved" do
+          p = meta_data
+          post 'create', additional_request_params.merge(p).merge({:format => :js})
+          JSON.parse(response.body)["errors"].should_not be_nil
+        end
+      end
     end
   end
 end
