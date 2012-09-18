@@ -50,9 +50,6 @@ class AssetsController < FassetsCore::ApplicationController
   def preview
     render :partial => content_model.to_s.underscore.pluralize + "/" + @content.media_type.to_s.underscore + "_preview"
   end
-  def content_model
-    return Asset.find(params[:id]).content_type.constantize
-  end
   def add_asset_box
     @asset_types = FassetsCore::Plugins::all
     selected_type = params[:type].to_i
