@@ -4,11 +4,13 @@
   =yield :core_head
 
 - content_for :catalogs_selector do
-  =collection_select :catalog,
-    :id, Catalog.all,
-    :id, :title,
-    options ={:prompt => "Catalogs ..."},
-    :onchange => "javascript:window.location= '/catalogs/' + this.value"
+  %select{ :onchange => "javascript:window.location= this.value"}
+    %option{ :value => "/" }= "Catalogs..."
+    =Catalog.all.each do |c|
+      - if params[:id].to_i == c.id
+        %option{ :value => '/catalogs/' + c.id.to_s, :selected => 'selected'}= c.title
+      - else 
+        %option{ :value => '/catalogs/' + c.id.to_s}= c.title   
 
 - content_for :tray do
   =render :partial => "shared/tray"
