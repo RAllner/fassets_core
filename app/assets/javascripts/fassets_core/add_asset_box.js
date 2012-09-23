@@ -13,23 +13,21 @@ $(document).ready(function(){
     var f_height = $(window).height()*0.8;
     $("#add_asset_content").css("left",$("#catalog_list").width()+10);
     $("#add_asset_content").css("width",$("#fancybox-content").width()-$("#catalog_list").width()-30-$("#facets").width());
-	  $.ajax({
-		  type		: "GET",
-		  cache	: false,
-		  url		: "/add_asset_box",
-		  success: function(data) {
-			  $.fancybox({
-          content: data,
-          padding: 0,
-          autoDimensions: false,
-          width: f_width,
-          height: f_height,
-          onComplete: function(){$("#fancybox-content").data("box-type","add_asset");}
-        });
-        adjust_links();
-        $.fancybox.resize();
-		  }
-	  });
+    $.ajaxSetup({cache: false});
+    $.get('/assets/new', { content_only: true }, function(data) {
+      $.fancybox({
+        content: data,
+        padding: 0,
+        autoDimensions: false,
+        width: f_width,
+        height: f_height,
+        onComplete: function(){
+          $("#fancybox-content").data("box-type","add_asset");
+          adjust_links();
+          $.fancybox.resize();
+        }
+      });
+    });
   };
   $(window).keydown(function(event){
     switch(event.keyCode) {
@@ -50,38 +48,11 @@ $(document).ready(function(){
       $("#fancybox-content li.asset_type").click(function(event){
         event.preventDefault();
         $.fancybox.showActivity();
-        var type = event.target.href.split("=")[1];
-        $("#fancybox-content").load("/add_asset_box?type="+type);
+        asset_type = $(event.target).data("asset-type");
+        $("#fancybox-content").load("/assets/new", {type: asset_type, content_only: true }, function() {
+          adjust_links();
+        });
         $.fancybox.resize();
-        $.fancybox.hideActivity();
-      });
-      $("#fancybox-content .wiki_submit").click(function(event){
-        event.preventDefault();
-        $.fancybox.showActivity();
-        var search_key = $("#file_asset_search_key").val();
-        $("#fancybox-content #add_asset_content").load("/search_wiki_imgs?search_key="+search_key);
-        $.fancybox.resize();;
-        $.fancybox.hideActivity();
-      });
-      $("#fancybox-content .add_wiki_img").click(function(event){
-        event.preventDefault();
-        $.fancybox.showActivity();
-        $.post("/file_assets/", $(event.target).parent().parent().serialize(), function(data){
-          for(var key in data){ alert('key name: ' + key + ' value: ' + data[key]); }
-          $("#fancybox-content #add_asset_content").load(data[0].edit_box_url+"?type="+data[0].content_type);
-        });
-        reload_tray();
-        $.fancybox.resize();;
-        $.fancybox.hideActivity();
-      });
-      $("#fancybox-content .add_remote_file").click(function(event){
-        event.preventDefault();
-        $.fancybox.showActivity();
-        $.post("/file_assets/", $(event.target).parent().serialize(), function(data){
-          $("#fancybox-content #add_asset_content").load(data[0].edit_box_url+"?type="+data[0].content_type, function(){adjust_links();});
-        });
-        reload_tray();
-        $.fancybox.resize();;
         $.fancybox.hideActivity();
       });
       $("#fancybox-content .asset_create_button").click(function(event){
@@ -100,34 +71,12 @@ $(document).ready(function(){
         $.fancybox.showActivity();
         //var token = encodeURIComponent(AUTH_TOKEN)
         var asset_type = $(event.target).data("asset-type");
-        if (asset_type == "FileAsset"){
-          var asset_data = {asset: {name: $("#fancybox-content #asset_name").val()}};
-          var f_author = $("#fancybox-content #file_asset_author").val();
-          var f_source = $("#fancybox-content #file_asset_source").val();
-          var f_license = $("#fancybox-content #file_asset_license").val();
-          var file_asset_data = {file_asset: {author: f_author, source: f_source, license: f_license}};
-          var asset_id = $("#fancybox-content .asset_submit_button").data("asset-id");
-          var content_id = $("#fancybox-content .asset_submit_button").data("content-id");
-          var data = {asset: {name: $("#fancybox-content #asset_name").val()}, file_asset: {author: f_author, source: f_source, license: f_license}, "asset_id": asset_id};
-          $.post("/file_assets/"+asset_id, data);
-        }
-        if (asset_type == "Url"){
-          var asset_id = $("#fancybox-content .asset_submit_button").data("asset-id");
-          var content_id = $("#fancybox-content .asset_submit_button").data("content-id");
-          var data = {asset: {name: $("#fancybox-content #asset_name").val()}, url: {url: $("#fancybox-content #url_url").val()}};
-          $.post("/urls/"+asset_id, data);
-        }
         reload_tray();
         $.fancybox.hideActivity();
       });
       $("form.edit_classification input[type=submit][value=Save]").hide();
     };
-  $(document).ajaxStop(function() {
-    if($("#fancybox-content").data("box-type") == "add_asset"){
-      adjust_links();
-      $.fancybox.resize();
-    }
-  });
+
   $("#new_asset_link").click(function(event){
     event.preventDefault();
     show_asset_box();
