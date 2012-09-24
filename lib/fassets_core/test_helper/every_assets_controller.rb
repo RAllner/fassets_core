@@ -79,13 +79,13 @@ shared_examples_for "Every AssetsController" do
     it "should redirect to root with error message on error" do
       get 'show', additional_request_params.merge({ :id => asset.id })
       response.should redirect_to(root_path)
-      request.flash[:error].should =~ /not found$/
+      request.flash[:error].should =~ /^Couldn't find/
     end
 
     it "should delete the asset and show a notice" do
       delete "destroy", additional_request_params.merge({ :id => asset.id })
       response.should redirect_to(root_path)
-      request.flash[:error].should =~ /not found$/
+      request.flash[:error].should =~ /^Couldn't find/
     end
 
     describe "create asset" do

@@ -24,11 +24,10 @@ Rails.application.routes.draw do
   end
 
   match 'asset/:id/preview' => 'Assets#preview'
-  match 'asset/:id/edit' => 'Assets#edit'
   match 'asset/:id/classifications' => 'Assets#classifications'
   match 'catalog_box' => 'Catalogs#catalog_box'
   match 'box_content' => 'Catalogs#box_content'
   match 'box_facet' => 'Catalogs#box_facet'
-  match 'edit_box/:id' => 'Assets#edit_box'
+  match 'assets/:asset_id/edit' => 'assets#edit'
   match 'assets/new' => 'assets#new'
 end

@@ -22,6 +22,33 @@ end
 describe AssetsController do
   include_examples "every authenticated controller"
 
+  describe "GET edit" do
+    let(:test_asset) do
+      a = Url.new(:url => "http://example.com/")
+      a.build_asset(:name => "Test URL")
+      a.save!
+      a
+    end
+
+    it "should assign content" do
+      a = test_asset
+      get 'edit', :asset_id => a.id
+      assigns(:content).should == a
+    end
+
+    it "should render edit template" do
+      a = test_asset
+      get 'edit', :asset_id => a.id
+      response.should render_template "assets/edit"
+    end
+
+    it "should flash error when asset not found" do
+      get 'edit', :asset_id => 1
+      response.should redirect_to(root_path)
+      request.flash[:error].should =~ /^Couldn't find/
+    end
+  end
+
   describe "GET new" do
     it "should have no registered plugins" do
       get 'new'

@@ -73,15 +73,14 @@ class AssetsController < FassetsCore::ApplicationController
     params[field_name]
   end
   def find_content
-    if params[:asset_id]
-      content_id = Asset.find(params[:id]).content_id
-    else
-      content_id = params[:id]
+    if self.respond_to?(:content_model)
+      @content = content_model.find(params[:id])
+    elsif !params[:asset_id].nil?
+      asset = Asset.find(params[:asset_id])
+      @content = asset.content
     end
-    content_id = Asset.find(params[:id]).content_id
-    @content = self.content_model.find(content_id)
   rescue ActiveRecord::RecordNotFound => e
-    flash[:error] = "#{self.content_model.to_s} with id #{params[:id]} not found"
+    flash[:error] = e.message
     redirect_to main_app.root_url
   end
   def create_content_labeling(asset_id,catalog_id)
