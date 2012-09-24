@@ -4,24 +4,23 @@ $(document).ready(function(){
       $.fancybox.showActivity();
       var f_width = $(window).width()*0.8;
       var f_height = $(window).height()*0.8;
-	    $.ajax({
-		    type		: "GET",
-		    cache	: false,
-		    url		: "/asset/"+asset_id+"/edit",
-		    success: function(data) {
-			    $.fancybox({
-            content: data,
-            padding: 0,
-            autoDimensions: false,
-            width: f_width,
-            height: f_height,
-            onComplete: function(){$("#fancybox-content").data("box-type","edit_asset");}
-          });
-          adjust_links();
-          $.fancybox.resize();
-		    }
-	    });
+      $.ajaxSetup({cache: false});
+      $.get('/assets/'+asset_id+'/edit', { content_only: true }, function(data) {
+        $.fancybox({
+          content: data,
+          padding: 0,
+          autoDimensions: false,
+          width: f_width,
+          height: f_height,
+          onComplete: function(){
+            $("#fancybox-content").data("box-type","edit_asset");
+            adjust_links();
+            $.fancybox.resize();
+          }
+        });
+      });
     };
+
     $("body .edit_button").live("click",function(event){
       event.preventDefault();
       show_edit_box(event);
