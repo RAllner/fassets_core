@@ -43,7 +43,7 @@ class AssetsController < FassetsCore::ApplicationController
     render :template => 'assets/show'
   end
   def edit
-    render :template => 'assets/edit', :locals => {:in_fancybox => false}, :layout => false
+    render :template => 'assets/edit', :layout => !(params["content_only"])
   end
   def update
     if @content.update_attributes(content_params) and @content.asset.update_attributes(params["asset"])

@@ -36,10 +36,18 @@ describe AssetsController do
       assigns(:content).should == a
     end
 
-    it "should render edit template" do
+    it "should render edit template with layout" do
       a = test_asset
       get 'edit', :asset_id => a.id
       response.should render_template "assets/edit"
+      response.should render_template "layouts/fassets_core/application"
+    end
+
+    it "should render without layout" do
+      a = test_asset
+      get 'edit', :asset_id => a.id, :content_only => :true
+      response.should render_template "assets/edit"
+      response.should_not render_template "layouts/fassets_core/application"
     end
 
     it "should flash error when asset not found" do
