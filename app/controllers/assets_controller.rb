@@ -26,7 +26,6 @@ class AssetsController < FassetsCore::ApplicationController
       if @content.save
         @classification = Classification.new(:catalog_id => params["classification"]["catalog_id"],:asset_id => @content.asset.id)
         @classification.save
-        create_content_labeling(@content.asset.id, params["classification"]["catalog_id"])
         flash[:notice] = "Created new asset!"
         format.js { render :json => @content.to_jq_upload.merge({:status => :ok}).to_json }
         format.html { redirect_to edit_asset_content_path(@content) }
@@ -82,33 +81,5 @@ class AssetsController < FassetsCore::ApplicationController
   rescue ActiveRecord::RecordNotFound => e
     flash[:error] = e.message
     redirect_to main_app.root_url
-  end
-  def create_content_labeling(asset_id,catalog_id)
-    asset = Asset.find(asset_id)
-    content_facet = Facet.where(:catalog_id => catalog_id, :caption => "Content Type").first
-    return if content_facet.nil?
-    content_facet.labels.each do |label|
-      if asset.content_type == "FileAsset"
-        if label.caption.downcase == asset.content.media_type
-          labeling = Labeling.new(:classification_id => @classification.id, :label_id => label.id)
-          labeling.save
-        end
-      elsif asset.content_type == "Url"
-        if label.caption == "Url"
-          labeling = Labeling.new(:classification_id => @classification.id, :label_id => label.id)
-          labeling.save
-        end
-      elsif asset.content_type == "Code"
-        if label.caption == "Code"
-          labeling = Labeling.new(:classification_id => @classification.id, :label_id => label.id)
-          labeling.save
-        end
-      elsif asset.content_type == "FassetsPresentations::Presentation"
-        if label.caption == "Presentation"
-          labeling = Labeling.new(:classification_id => @classification.id, :label_id => label.id)
-          labeling.save
-        end
-      end
-    end
   end
 end
