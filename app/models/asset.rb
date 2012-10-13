@@ -10,13 +10,6 @@ class Asset < ActiveRecord::Base
 
   after_create :put_on_tray
 
-  def publish=(test)
-  end
-  def published=(test)
-  end
-  def published
-    1
-  end
   def self.filter(filter)
     options = {:select => "assets.*", :order => "name"}
     unless filter.empty?
@@ -31,14 +24,14 @@ class Asset < ActiveRecord::Base
     options = {:include => [:labelings], :group => "label_id"}
     unless filter.empty?
       options[:conditions] = "assets.id IN(
-          SELECT DISTINCT assets.id 
-            FROM assets 
-              LEFT OUTER JOIN classifications ON (assets.id = classifications.asset_id) 
-              LEFT OUTER JOIN labelings ON (labelings.classification_id=classifications.id) 
-            WHERE (#{filter.to_condition}) 
-            GROUP BY assets.id 
+          SELECT DISTINCT assets.id
+            FROM assets
+              LEFT OUTER JOIN classifications ON (assets.id = classifications.asset_id)
+              LEFT OUTER JOIN labelings ON (labelings.classification_id=classifications.id)
+            WHERE (#{filter.to_condition})
+            GROUP BY assets.id
           HAVING COUNT(label_id)=#{filter.size})"
-          filter.to_condition
+      filter.to_condition
     end
     count options
   end
