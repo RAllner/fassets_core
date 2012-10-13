@@ -58,7 +58,8 @@ describe AssetsController do
   end
 
   describe "GET new" do
-    it "should have no registered plugins" do
+    it "should work with no registered plugins" do
+      FassetsCore::Plugins.stub!(:all) { [] }
       get 'new'
       assigns(:content).should be_nil
       assigns(:asset_types).should == []
