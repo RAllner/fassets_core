@@ -1,0 +1,11 @@
+test_catalog1:
+  id: 1
+  title: Test Catalog 1
+
+test_catalog2:
+  id: 2
+  title: Test Catalog 2
+
+test_catalog3:
+  id: 3
+  title: Test Catalog 3

@@ -3,12 +3,6 @@ require 'spec_helper'
 describe CatalogsController do
   include_examples "every authenticated controller"
 
-  before(:each) do
-    Catalog.create!({:title => "Testcatalog1"})
-    Catalog.create!({:title => "Testcatalog2"})
-    Catalog.create!({:title => "Testcatalog3"})
-  end
-
   describe "GET 'index'" do
     before(:each) { get 'index' }
     it "should assign all catalogs" do

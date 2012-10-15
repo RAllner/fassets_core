@@ -63,9 +63,6 @@ describe LabelsController do
 
   describe "PUT 'sort'" do
     before(:each) do
-      Label.create!(:caption => "Testlabel1")
-      Label.create!(:caption => "Testlabel2")
-      Label.create!(:caption => "Testlabel3")
       Label.all.map{ |l| l.id }.should == [1,2,3]
     end
 
