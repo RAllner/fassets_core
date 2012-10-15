@@ -1,0 +1,11 @@
+label1:
+  id: 1
+  caption: Test Label 1
+
+label2:
+  id: 2
+  caption: Test Label 2
+
+label3:
+  id: 3
+  caption: Test Label 3
