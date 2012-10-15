@@ -19,3 +19,19 @@ bundle exec rake fassets_core_engine:install:migrations
 bundle exec rake db:migrate
 ```
 
+# Run tests
+
+In order to run the tests for the first time, you need to do the following in a clean repository:
+
+```
+bundle
+RAILS_ENV=test rake db:migrate
+bundle exec guard
+```
+
+After the initial setup, it is okay to just start guard:
+
+```
+bundle exec guard
+```
+
