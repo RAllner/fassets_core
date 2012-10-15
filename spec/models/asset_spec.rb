@@ -78,6 +78,11 @@ describe Asset do
   end
 
   context "with label filters" do
+    fixtures :labels, :catalogs
+    let(:catalog) { Catalog.all.first }
+    let(:label1) { Label.find 1 }
+    let(:label2) { Label.find 2 }
+
     it "should work with an empty filter" do
       f = LabelFilter.new ""
       Asset.filter(f).should == Asset.all
@@ -89,24 +94,26 @@ describe Asset do
       a2 = Asset.create!(:content => Url.create!(:url => "http://example.com"), :name => "TestLabel2")
       a2_1 = Asset.create!(:content => Url.create!(:url => "http://example.com"), :name => "TestLabel2.1")
       a3 = Asset.create!(:content => Url.create!(:url => "http://example.com"), :name => "TestLabel3")
-      l1 = Label.create!(:caption => "Label1")
-      l2 = Label.create!(:caption => "Label2")
-      c = Catalog.create!(:title => "Test Catalog")
-      c1 = Classification.create!(:asset => a1, :catalog => c)
-      c2 = Classification.create!(:asset => a3, :catalog => c)
-      Labeling.create!(:classification => c1, :label => l1)
-      Labeling.create!(:classification => c2, :label => l2)
-      Labeling.create!(:classification => c2, :label => l1)
-      Labeling.create!(:classification => Classification.create!(:asset => a1_1, :catalog => c), :label => l1)
-      Labeling.create!(:classification => Classification.create!(:asset => a2, :catalog => c), :label => l2)
-      Labeling.create!(:classification => Classification.create!(:asset => a2_1, :catalog => c), :label => l2)
 
-      f1 = LabelFilter.new l1.id.to_s
-      f2 = LabelFilter.new l2.id.to_s
-      f3 = LabelFilter.new "#{l1.id}-#{l2.id}"
-      c.assets.filter(f1).should == [a1, a1_1, a3]
-      c.assets.filter(f2).should == [a2, a2_1, a3]
-      c.assets.filter(f3).should == [a3]
+      c1 = Classification.create!(:asset => a1, :catalog => catalog)
+      c1_1 = Classification.create!(:asset => a1_1, :catalog => catalog)
+      c2 = Classification.create!(:asset => a2, :catalog => catalog)
+      c2_1 = Classification.create!(:asset => a2_1, :catalog => catalog)
+      c3 = Classification.create!(:asset => a3, :catalog => catalog)
+
+      Labeling.create!(:classification => c1, :label => label1)
+      Labeling.create!(:classification => c1_1, :label => label1)
+      Labeling.create!(:classification => c2, :label => label2)
+      Labeling.create!(:classification => c2_1, :label => label2)
+      Labeling.create!(:classification => c3, :label => label2)
+      Labeling.create!(:classification => c3, :label => label1)
+
+      f1 = LabelFilter.new label1.id.to_s
+      f2 = LabelFilter.new label2.id.to_s
+      f3 = LabelFilter.new (f1 + f2).join("-")
+      catalog.assets.filter(f1).should == [a1, a1_1, a3]
+      catalog.assets.filter(f2).should == [a2, a2_1, a3]
+      catalog.assets.filter(f3).should == [a3]
     end
   end
 end
