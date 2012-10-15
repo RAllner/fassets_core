@@ -6,3 +6,11 @@
  *= require_self
  *= require_tree .
 */
+
+.url {
+  height: 100%;
+  width: 100%;
+  background-color: lightgray;
+  padding: 0px 3px;
+  text-align: center;
+}
