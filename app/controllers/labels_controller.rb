@@ -1,6 +1,7 @@
 class LabelsController < FassetsCore::ApplicationController
   before_filter :authenticate_user!
   before_filter :find_label, :except => [:create, :sort]
+  respond_to :html, :json
   def create
     @label = Label.new(params[:label])
     @label.facet_id = params[:facet_id]
@@ -12,19 +13,27 @@ class LabelsController < FassetsCore::ApplicationController
         flash[:error] = "Label could not be created! Caption cannot be empty!"
       else
         flash[:error] = "Label could not be created!"
-      end      
+      end
       redirect_to :back
     end
   end
   def update
-    if params[:label][:caption].blank?
-      flash[:error] = "Label could not be updated! Caption cannot be empty!"
-      redirect_to :back
-      return
-    end            
     @label.update_attributes(params[:label])
-    flash[:notice] = "Label was successfully updated."
-    redirect_to edit_catalog_facet_path(params[:catalog_id], params[:facet_id])    
+    respond_to do |format|
+      if @label.save
+        format.html do
+          flash[:notice] = "Label was successfully updated."
+          redirect_to edit_catalog_facet_path(params[:catalog_id], params[:facet_id])
+        end
+        format.json { respond_with_bip(@label) }
+      else
+        format.html do
+          flash[:error] = "Label could not be updated! Caption cannot be empty!"
+          redirect_to :back
+        end
+        format.json { respond_with_bip(@label) }
+      end
+    end
   end
   def sort
     params[:label].each_with_index do |id, position|

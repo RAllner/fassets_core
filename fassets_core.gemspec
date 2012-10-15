@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency "sqlite3"
   s.add_dependency "mime-types"
   s.add_dependency "fancybox-rails"
+  s.add_dependency "best_in_place"
 
   s.add_development_dependency "devise"
   s.add_development_dependency "guard-rspec"

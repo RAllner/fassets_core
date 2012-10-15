@@ -2,13 +2,10 @@ $(function(){
   //Sortable Labels
   $('#labels').sortable({
     axis: 'y',
-    start: function() {
-      $('#labels .handle').bind('click',noEventPropagation);
-    },
-    stop:function() {
-      $('#labels .handle').unbind('click', noEventPropagation);
-    },
-    update:function(){
+    handle: ".handle",
+    update: function(e, ui){
+      url = $("ol#labels").data('update_url')
+      $.post(url, $(this).sortable('serialize'))
     }
   });
 
@@ -24,6 +21,8 @@ $(function(){
   });
   // hide the submit button if JS is enabled (form can be submited by checking the boxes)
   $("form.edit_classification input[type=submit][value=Save]").hide();
+
+  $('.best_in_place').best_in_place();
 });
 
 /*$.ajax({

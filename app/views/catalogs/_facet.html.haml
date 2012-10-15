@@ -5,7 +5,7 @@
       =link_to image_tag("fassets_core/edit.png"), edit_catalog_facet_path(@catalog, facet)
       %span.handle=image_tag("fassets_core/drag.png")
   %ul{:class => "#{facet.color}_lite"}
-    -facet.labels.each do |label|
+    -facet.ordered_labels.each do |label|
       -if @counts[label.id] && !@filter.include?(label.id)
         %li.label
           =link_to label.caption, catalog_path(@catalog, :filter => @filter.to_query_include(label.id))

@@ -1,4 +1,4 @@
-.fassets_core {
+.fassets_core .labels {
   .collapsible {
     text-align: left;
   }
@@ -9,5 +9,20 @@
 
   ul {
     margin: 0;
+  }
+
+  span.best_in_place {
+    display: inline;
+  }
+  form {
+    display: inline;
+
+    div {
+      display: inline;
+    }
+
+    input {
+      display: inline;
+    }
   }
 }

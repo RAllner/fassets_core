@@ -1,22 +1,22 @@
-.collapsible
-  %h2.title New Label
-  =form_for [@catalog, @facet, Label.new], :url => catalog_facet_labels_path(@catalog,@facet) do |f|
-    =render :partial => "labels/form", :object => f
-    =submit_tag "Create"
-
-.collapsible
+.labels
   %h2.title Labels
-  %ol.collection{:class => @facet.label_order == 'position' ? "sortable" : nil, :id => "catalogs.#{@catalog.id}.facets.#{@facet.id}.labels.sort"}
+  .collapsible
+    %h2.title New Label
+    =form_for [@catalog, @facet, Label.new] do |f|
+      =render :partial => "labels/form", :object => f
+      =submit_tag "Create"
+
+  %ol.collection{:class => @facet.label_order == 'position' ? "sortable" : nil,
+    :id => "labels",
+    :data => {:update_url => sort_catalog_facet_labels_path(@catalog, @facet)}}
     -@facet.ordered_labels.each do |label|
       %li{:id => "label_#{label.id}"}
-        =label.caption
-        .content
-          =form_for [@catalog, @facet, label], :url => catalog_facet_label_path(@catalog, @facet, label) do |f|
-            =render :partial => "labels/form", :object => f
-            =submit_tag "Save"
-          =button_to "Drop", catalog_facet_label_path(@catalog, @facet, label),
+        %span.content
+          =best_in_place label, :caption, :path => catalog_facet_label_path(@catalog, @facet, label)
+          =button_to "Delete", catalog_facet_label_path(@catalog, @facet, label),
             :confirm => 'Are you sure?',
             :method => "delete",
             :remote => true,
             :disable_with => 'loading...'
-
+        - if @facet.label_order == 'position'
+          %span.handle= image_tag "fassets_core/drag.png"

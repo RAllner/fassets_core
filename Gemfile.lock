@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     fassets_core (0.2.0)
+      best_in_place
       fancybox-rails
       haml
       jquery-rails
@@ -43,6 +44,9 @@ GEM
     addressable (2.3.2)
     arel (2.2.3)
     bcrypt-ruby (3.0.1)
+    best_in_place (1.1.2)
+      jquery-rails
+      rails (~> 3.1)
     builder (3.0.3)
     capybara (1.1.2)
       mime-types (>= 1.16)
