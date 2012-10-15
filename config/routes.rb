@@ -3,10 +3,10 @@ Rails.application.routes.draw do
     resources :facets do
       collection do
         post :sort
-      end  
+      end
       resources :labels do
         collection do
-          put :sort
+          post :sort
         end
       end
     end
