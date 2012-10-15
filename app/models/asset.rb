@@ -20,6 +20,7 @@ class Asset < ActiveRecord::Base
     all options
   end
 
+  # FIXME: is this used somewhere? should be removed right after the release of 0.3.0 to test if something breaks
   def self.count_for_labels(filter)
     options = {:include => [:labelings], :group => "label_id"}
     unless filter.empty?
