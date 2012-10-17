@@ -1,16 +1,11 @@
-- content_for :head do
-  =stylesheet_link_tag 'fassets_core/application'
-  =javascript_include_tag 'fassets_core/application'
-  =yield :core_head
-
 - content_for :catalogs_selector do
   %select{ :onchange => "javascript:window.location= this.value"}
     %option{ :value => "/" }= "Catalogs..."
     =Catalog.all.each do |c|
       - if params[:id].to_i == c.id
         %option{ :value => '/catalogs/' + c.id.to_s, :selected => 'selected'}= c.title
-      - else 
-        %option{ :value => '/catalogs/' + c.id.to_s}= c.title   
+      - else
+        %option{ :value => '/catalogs/' + c.id.to_s}= c.title
 
 - content_for :tray do
   =render :partial => "shared/tray"
