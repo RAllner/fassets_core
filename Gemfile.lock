@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    fassets_core (0.3.0)
+    fassets_core (0.3.1)
       best_in_place
       fancybox-rails
       haml
