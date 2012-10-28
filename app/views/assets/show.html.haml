@@ -1,5 +1,5 @@
 #asset_preview
-  =render content_partial(@content, :preview)
+  =render :partial => content_partial(@content, :preview), :locals{content => @content}
 
 =content_for :h1 do
   #type

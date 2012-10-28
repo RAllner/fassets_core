@@ -13,7 +13,7 @@
           =render :partial => "assets/put_on_tray"
           =render :partial => "#{@content.class.to_s.underscore.pluralize}/actions" rescue nil
   #asset_preview
-    =render content_partial(@content, :preview)
+    =render :partial => content_partial(@content, :preview), :locals => {:content => @content}
 
 #asset_form
   =form_for @content, :url => asset_content_path(@content), :html => {:class => "fassets_core asset_form", :multipart => true} do |f|
