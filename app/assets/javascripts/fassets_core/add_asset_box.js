@@ -53,25 +53,6 @@ $(document).ready(function(){
       $.fancybox.resize();
       $.fancybox.hideActivity();
     });
-    $("#fancybox-content .asset_create_button").click(function(event){
-      event.preventDefault();
-      $.fancybox.showActivity();
-      var action = $("#add_asset_content form").attr("action");
-      $.post(action, $("#add_asset_content form").serialize(), function(data){
-        $("#fancybox-content #add_asset_content").load(data[0].edit_box_url+"?type="+data[0].content_type);
-      });
-      reload_tray();
-      $.fancybox.resize();;
-      $.fancybox.hideActivity();
-    });
-    $("#fancybox-content .asset_submit_button").click(function(event){
-      event.preventDefault();
-      $.fancybox.showActivity();
-      //var token = encodeURIComponent(AUTH_TOKEN)
-      var asset_type = $(event.target).data("asset-type");
-      reload_tray();
-      $.fancybox.hideActivity();
-    });
     $("form.edit_classification input[type=submit][value=Save]").hide();
   };
 
