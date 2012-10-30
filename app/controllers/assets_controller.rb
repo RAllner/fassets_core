@@ -31,7 +31,7 @@ class AssetsController < FassetsCore::ApplicationController
         format.html { redirect_to edit_asset_content_path(@content) }
       else
         flash[:error] = "Could not create asset!"
-        format.js { render :json => {:errors => @content.errors.messages}.to_json }
+        format.js { render :json => {:errors => @content.errors.messages}.to_json, :status => :unprocessable_entity }
         format.html do
           render :template => 'assets/new'
         end

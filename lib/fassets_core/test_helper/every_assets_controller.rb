@@ -131,6 +131,7 @@ shared_examples_for "Every AssetsController" do
           p = meta_data
           post 'create', additional_request_params.merge(p).merge({:format => :js})
           JSON.parse(response.body)["errors"].should_not be_nil
+          response.status.should == 422
         end
       end
     end
