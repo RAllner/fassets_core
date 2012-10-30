@@ -13,6 +13,7 @@
 //= require ./classification
 //= require ./edit_box
 //= require ./facets
+//= require ./form
 //= require ./tray
 
 $.ajaxSetup({ 'beforeSend': function(xhr) {
