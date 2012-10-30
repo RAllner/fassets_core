@@ -12,8 +12,7 @@
   -unless @content.nil?
     #add_asset_content
       #main.fassets_core
-        =form_for @content, :url => asset_content_path(@content),:html => {:multipart => true} do |f|
-          =render :partial => "shared/error", :locals => {:target => @content}
+        =form_for @content, :url => asset_content_path(@content), :remote => true do |f|
           =fields_for "asset" do |asset|
             %p
               %label{:for => 'name'} Name:
