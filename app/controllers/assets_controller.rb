@@ -45,12 +45,19 @@ class AssetsController < FassetsCore::ApplicationController
     render :template => 'assets/edit', :layout => !(params["content_only"])
   end
   def update
-    if @content.update_attributes(content_params) and @content.asset.update_attributes(params["asset"])
+    @content.update_attributes(content_params)
+    @content.asset.update_attributes(params["asset"])
+    if @content.save
       flash[:notice] = "Succesfully updated asset!"
       render :nothing => true
     else
-      flash[:error] = "Could not update asset!"
-      render :template => 'assets/edit'
+      respond_to do |format|
+        format.js { render :json => {:errors => @content.errors.messages}.to_json, :status => :unprocessable_entity }
+        format.html do
+          flash[:error] = "Could not update asset!"
+          render :template => 'assets/edit'
+        end
+      end
     end
   end
   def destroy

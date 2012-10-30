@@ -78,11 +78,28 @@ shared_examples_for "Every AssetsController" do
       end
 
       it "should throw an error when update fails" do
-        controller.instance_eval { @content.stub!(:update_attributes) { false } }
-        post 'update', additional_request_params.merge({ :id => asset.id })
+        controller.instance_eval { @content.stub!(:save) { false } }
+        post 'update', additional_request_params.merge({ :id => asset.id, :asset => { :name => "" } })
         assigns(:content).should respond_to(:update_attributes).with(1).argument
         request.flash[:error].should =~ /^Could not update asset!$/
         response.should render_template 'assets/edit'
+      end
+
+      context "JS request" do
+        it "should fail with empty name for asset" do
+          controller.instance_eval do
+            @content.stub!(:save) { false }
+            @content.stub!(:errors) { Asset.create(:content_type => "Test").errors }
+          end
+          post 'update', additional_request_params.merge({ :id => asset.id, :format => :js, :asset => { :name => "" } })
+          response.status.should == 422
+          json = JSON.parse(response.body)
+          #HACK: in fact this should be 'asset.name'
+          #but errors needed to be stubbed and I’m not sure how exactly I can do this
+          json["errors"].should have_key("name")
+          json["errors"]["name"].first.should == "can't be blank"
+        end
+
       end
     end
   end
@@ -155,6 +172,7 @@ module FassetsCore::TestHelpers
     my_a = asset
     my_a.stub!(:destroy)
     my_a.stub!(:update_attributes) { true }
+    my_a.stub!(:save) { true }
     my_a.stub!(:asset) { double(Asset, :update_attributes => true, :name => "Example Asset") }
     controller.stub!(:find_content) { }
     controller.instance_eval { @content = my_a }
