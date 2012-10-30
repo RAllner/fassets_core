@@ -7,6 +7,19 @@
     .submit {
       margin-top: 1em;
     }
+
+    span.errors {
+      ul {
+        display: inline;
+
+        li {
+          display: inline;
+          color: red;
+        }
+        li:after { content: ", "; }
+        li:last-child:after { content: ""; }
+      }
+    }
   }
 }
 

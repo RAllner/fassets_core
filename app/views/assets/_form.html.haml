@@ -22,7 +22,7 @@
       %p
         %label{:for => 'name'} Name:
         =asset.text_field :name
-        #name_warning
+        %span#asset_name.errors
     =render :partial => "#{@content.class.to_s.underscore.pluralize}/form", :locals => {:new => new}, :object => f
     =submit_tag @content.new_record? ? "Create" : "Save",
       :class => "asset_submit_button",
