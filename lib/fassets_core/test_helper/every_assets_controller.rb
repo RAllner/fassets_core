@@ -123,8 +123,8 @@ shared_examples_for "Every AssetsController" do
           post 'create', additional_request_params.merge(p)
           content = assigns(:content)
           content.errors.messages.should == {}
-          JSON.parse(response.body).class.should == Hash
-          JSON.parse(response.body)["status"].should == "ok"
+          response.should be_success
+          response.body.strip.should be_empty
         end
 
         it "should fail when asset cannot be saved" do

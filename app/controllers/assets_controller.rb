@@ -27,7 +27,7 @@ class AssetsController < FassetsCore::ApplicationController
         @classification = Classification.new(:catalog_id => params["classification"]["catalog_id"],:asset_id => @content.asset.id)
         @classification.save
         flash[:notice] = "Created new asset!"
-        format.js { render :json => @content.to_jq_upload.merge({:status => :ok}).to_json }
+        format.js { render :nothing => true }
         format.html { redirect_to edit_asset_content_path(@content) }
       else
         flash[:error] = "Could not create asset!"
