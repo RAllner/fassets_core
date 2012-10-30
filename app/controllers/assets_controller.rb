@@ -54,9 +54,14 @@ class AssetsController < FassetsCore::ApplicationController
     end
   end
   def destroy
-    flash[:notice] = "Asset has been deleted!"
     @content.destroy
-    redirect_to main_app.root_url
+    respond_to do |format|
+      format.js { render :nothing => true }
+      format.html do
+        flash[:notice] = "Asset has been deleted!"
+        redirect_to main_app.root_url
+      end
+    end
   end
   def preview
     render :partial => content_model.to_s.underscore.pluralize + "/" + @content.media_type.to_s.underscore + "_preview"

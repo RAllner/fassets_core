@@ -47,11 +47,23 @@ shared_examples_for "Every AssetsController" do
     end
 
     describe "DELETE asset" do
-      it "should delete the asset and show a notice" do
-        delete "destroy", additional_request_params.merge({ :id => asset.id })
-        assigns(:content).should respond_to(:destroy).with(0).arguments
-        response.should redirect_to root_path
-        request.flash[:notice].should =~ /^Asset has been deleted!$/
+      context "HTML request" do
+        it "should delete the asset and show a notice" do
+          delete "destroy", additional_request_params.merge({ :id => asset.id })
+          assigns(:content).should respond_to(:destroy).with(0).arguments
+          response.should redirect_to root_path
+          request.flash[:notice].should =~ /^Asset has been deleted!$/
+        end
+      end
+
+      context "JS request" do
+        it "should delete the asset" do
+          delete "destroy", additional_request_params.merge({ :id => asset.id, :format => :js })
+          assigns(:content).should respond_to(:destroy).with(0).arguments
+          response.should be_success
+          response.body.strip.should be_empty
+          request.flash.should be_empty
+        end
       end
     end
 
