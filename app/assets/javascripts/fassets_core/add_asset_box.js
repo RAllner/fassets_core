@@ -61,22 +61,4 @@ $(document).ready(function(){
     event.preventDefault();
     show_asset_box();
   });
-  var reload_tray = function() {
-    var user_id = $("#tray").data("user-id");
-    $("#tray").load("/users/"+user_id+"/tray_positions/", function() {
-      $('#tray .drop_button').click(function(event){
-        event.preventDefault();
-        var user_id = $(event.target).data("user-id");
-        var tp_id = $(event.target).data("tp-id");
-        $.ajax({
-          type: 'DELETE',
-          cache	: false,
-          url		: "/users/"+user_id+"/tray_positions/"+tp_id,
-          success: function(data) {
-            $("#tray").load("/users/"+user_id+"/tray_positions/");
-          }
-        });
-      });
-    });
-  };
 });
