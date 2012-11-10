@@ -1,6 +1,7 @@
 $(document).ready(function(){
   $(document).bind('ajax:success', function(evt, xhr, status){
     reload_tray();
+    $('form').find('.errors').empty();
     $.fancybox.close();
     $("img[src=\"/assets/fassets_core/collapse.png\"].collapseExpandToggle").click();
     $("#catalogs_list").load("/catalogs");
