@@ -47,11 +47,23 @@ shared_examples_for "Every AssetsController" do
     end
 
     describe "DELETE asset" do
-      it "should delete the asset and show a notice" do
-        delete "destroy", additional_request_params.merge({ :id => asset.id })
-        assigns(:content).should respond_to(:destroy).with(0).arguments
-        response.should redirect_to root_path
-        request.flash[:notice].should =~ /^Asset has been deleted!$/
+      context "HTML request" do
+        it "should delete the asset and show a notice" do
+          delete "destroy", additional_request_params.merge({ :id => asset.id })
+          assigns(:content).should respond_to(:destroy).with(0).arguments
+          response.should redirect_to root_path
+          request.flash[:notice].should =~ /^Asset has been deleted!$/
+        end
+      end
+
+      context "JS request" do
+        it "should delete the asset" do
+          delete "destroy", additional_request_params.merge({ :id => asset.id, :format => :js })
+          assigns(:content).should respond_to(:destroy).with(0).arguments
+          response.should be_success
+          response.body.strip.should be_empty
+          request.flash.should be_empty
+        end
       end
     end
 
@@ -66,11 +78,28 @@ shared_examples_for "Every AssetsController" do
       end
 
       it "should throw an error when update fails" do
-        controller.instance_eval { @content.stub!(:update_attributes) { false } }
-        post 'update', additional_request_params.merge({ :id => asset.id })
+        controller.instance_eval { @content.stub!(:save) { false } }
+        post 'update', additional_request_params.merge({ :id => asset.id, :asset => { :name => "" } })
         assigns(:content).should respond_to(:update_attributes).with(1).argument
         request.flash[:error].should =~ /^Could not update asset!$/
         response.should render_template 'assets/edit'
+      end
+
+      context "JS request" do
+        it "should fail with empty name for asset" do
+          controller.instance_eval do
+            @content.stub!(:save) { false }
+            @content.stub!(:errors) { Asset.create(:content_type => "Test").errors }
+          end
+          post 'update', additional_request_params.merge({ :id => asset.id, :format => :js, :asset => { :name => "" } })
+          response.status.should == 422
+          json = JSON.parse(response.body)
+          #HACK: in fact this should be 'asset.name'
+          #but errors needed to be stubbed and I’m not sure how exactly I can do this
+          json["errors"].should have_key("name")
+          json["errors"]["name"].first.should == "can't be blank"
+        end
+
       end
     end
   end
@@ -123,14 +152,15 @@ shared_examples_for "Every AssetsController" do
           post 'create', additional_request_params.merge(p)
           content = assigns(:content)
           content.errors.messages.should == {}
-          JSON.parse(response.body).class.should == Hash
-          JSON.parse(response.body)["status"].should == "ok"
+          response.should be_success
+          response.body.strip.should be_empty
         end
 
         it "should fail when asset cannot be saved" do
           p = meta_data
           post 'create', additional_request_params.merge(p).merge({:format => :js})
           JSON.parse(response.body)["errors"].should_not be_nil
+          response.status.should == 422
         end
       end
     end
@@ -142,6 +172,7 @@ module FassetsCore::TestHelpers
     my_a = asset
     my_a.stub!(:destroy)
     my_a.stub!(:update_attributes) { true }
+    my_a.stub!(:save) { true }
     my_a.stub!(:asset) { double(Asset, :update_attributes => true, :name => "Example Asset") }
     controller.stub!(:find_content) { }
     controller.instance_eval { @content = my_a }

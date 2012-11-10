@@ -27,11 +27,11 @@ class AssetsController < FassetsCore::ApplicationController
         @classification = Classification.new(:catalog_id => params["classification"]["catalog_id"],:asset_id => @content.asset.id)
         @classification.save
         flash[:notice] = "Created new asset!"
-        format.js { render :json => @content.to_jq_upload.merge({:status => :ok}).to_json }
+        format.js { render :nothing => true }
         format.html { redirect_to edit_asset_content_path(@content) }
       else
         flash[:error] = "Could not create asset!"
-        format.js { render :json => {:errors => @content.errors.messages}.to_json }
+        format.js { render :json => {:errors => @content.errors.messages}.to_json, :status => :unprocessable_entity }
         format.html do
           render :template => 'assets/new'
         end
@@ -45,18 +45,30 @@ class AssetsController < FassetsCore::ApplicationController
     render :template => 'assets/edit', :layout => !(params["content_only"])
   end
   def update
-    if @content.update_attributes(content_params) and @content.asset.update_attributes(params["asset"])
+    @content.update_attributes(content_params)
+    @content.asset.update_attributes(params["asset"])
+    if @content.save
       flash[:notice] = "Succesfully updated asset!"
       render :nothing => true
     else
-      flash[:error] = "Could not update asset!"
-      render :template => 'assets/edit'
+      respond_to do |format|
+        format.js { render :json => {:errors => @content.errors.messages}.to_json, :status => :unprocessable_entity }
+        format.html do
+          flash[:error] = "Could not update asset!"
+          render :template => 'assets/edit'
+        end
+      end
     end
   end
   def destroy
-    flash[:notice] = "Asset has been deleted!"
     @content.destroy
-    redirect_to main_app.root_url
+    respond_to do |format|
+      format.js { render :nothing => true }
+      format.html do
+        flash[:notice] = "Asset has been deleted!"
+        redirect_to main_app.root_url
+      end
+    end
   end
   def preview
     render :partial => content_model.to_s.underscore.pluralize + "/" + @content.media_type.to_s.underscore + "_preview"
