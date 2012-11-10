@@ -18,15 +18,25 @@ class CatalogsController < FassetsCore::ApplicationController
     @catalog = Catalog.new(params[:catalog])
     if @catalog.save
       create_type_facet()
-      flash[:notice] = "Catalog was successfully created."
-      redirect_to catalogs_path
-    else
-      if params[:catalog][:title].blank?
-        flash[:error] = "Catalog could not be created! Title cannot be empty!"
-      else
-        flash[:error] = "Catalog could not be created!"
+      respond_to do |format|
+        format.html do
+          flash[:notice] = "Catalog was successfully created."
+          redirect_to catalogs_path
+        end
+        format.js { render :nothing => true }
       end
-      render :template => 'catalogs/index'
+    else
+      respond_to do |format|
+        format.html do
+          if params[:catalog][:title].blank?
+            flash[:error] = "Catalog could not be created! Title cannot be empty!"
+          else
+            flash[:error] = "Catalog could not be created!"
+          end
+          render :template => 'catalogs/index'
+        end
+        format.js { render :json => {:errors => @catalog.errors.messages}.to_json, :status => :unprocessable_entity }
+      end
     end
   end
   def edit

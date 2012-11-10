@@ -37,26 +37,56 @@ describe CatalogsController do
 
   describe "POST 'create'" do
     context "with valid catalog data" do
-      before(:each) do
-        params = {:catalog => {:title => "Testcatalog4"}}
-        post 'create', params
+      let(:params) do
+        {:catalog => {:title => "Testcatalog4"}}
       end
-      it { assigns(:catalog).should be_valid }
-      it { request.flash[:notice].should =~ /^Catalog was successfully created.$/ }
-      it { response.should redirect_to catalogs_path }
-      it "saves the catalog" do
-        Catalog.all.should have(4).items
+      context "and HTML format" do
+        before(:each) do
+          post 'create', params
+        end
+        it { assigns(:catalog).should be_valid }
+        it { request.flash[:notice].should =~ /^Catalog was successfully created.$/ }
+        it { response.should redirect_to catalogs_path }
+        it "saves the catalog" do
+          Catalog.all.should have(4).items
+        end
+      end
+
+      context "and JS format" do
+        before(:each) do
+          post 'create', params.merge({:format => :js})
+        end
+
+        it { assigns(:catalog).should be_valid }
+        it { response.should be_success }
       end
     end
 
     context "with invalid catalog data" do
-      before(:each) do
-        params = {:catalog => {}}
-        post 'create', params
+      let(:params) do
+        {:catalog => {}}
       end
-      it { assigns(:catalog).should_not be_valid }
-      it { response.should render_template 'catalogs/index' }
-      it { request.flash[:error].should =~ /^Catalog could not be created!/ }
+
+      context "and HTML format" do
+        before(:each) do
+          post 'create', params
+        end
+        it { assigns(:catalog).should_not be_valid }
+        it { response.should render_template 'catalogs/index' }
+        it { request.flash[:error].should =~ /^Catalog could not be created!/ }
+      end
+
+      context "and JS format" do
+        before(:each) do
+          post 'create', params.merge({:format => :js})
+        end
+
+        it { assigns(:catalog).should_not be_valid }
+        it { response.status.should == 422 }
+        it "should return errors as json" do
+          JSON.parse(response.body)["errors"].should_not be_nil
+        end
+      end
     end
   end
 
