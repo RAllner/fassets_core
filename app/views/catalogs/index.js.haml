@@ -1,0 +1,5 @@
+%ul.collection
+  -Catalog.all.each do |catalog|
+    %li
+      =link_to(catalog.title, catalog_path(catalog))
+      .content=catalog.info

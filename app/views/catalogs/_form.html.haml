@@ -1,6 +1,7 @@
 %p
   %label{:for => 'title'} Title:
   =text_field :catalog, :title
+  %span#title.errors
 %p
   %label{:for => 'info'} Info:
   =text_area :catalog, :info, :rows => 4

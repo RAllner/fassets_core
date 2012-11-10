@@ -2,6 +2,8 @@ $(document).ready(function(){
   $(document).bind('ajax:success', function(evt, xhr, status){
     reload_tray();
     $.fancybox.close();
+    $("img[src=\"/assets/fassets_core/collapse.png\"].collapseExpandToggle").click();
+    $("#catalogs_list").load("/catalogs");
   });
   $(document).bind('ajax:error', function(evt, xhr, status, error){
     var responseObject = $.parseJSON(xhr.responseText),
