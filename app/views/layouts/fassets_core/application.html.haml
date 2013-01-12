@@ -1,13 +1,27 @@
-- content_for :catalogs_selector do
-  %select{ :onchange => "javascript:window.location= this.value"}
-    %option{ :value => "/" }= "Catalogs..."
-    =Catalog.all.each do |c|
-      - if params[:id].to_i == c.id
-        %option{ :value => '/catalogs/' + c.id.to_s, :selected => 'selected'}= c.title
-      - else
-        %option{ :value => '/catalogs/' + c.id.to_s}= c.title
 
+-#we need to implement this into the navbar
+/ - content_for :catalogs_selector do
+/   %select{ :onchange => "javascript:window.location= this.value"}
+/     %option{ :value => "/" }= "Catalogs..."
+/     =Catalog.all.each do |c|
+/       - if params[:id].to_i == c.id
+/         %option{ :value => '/catalogs/' + c.id.to_s, :selected => 'selected'}= c.title
+/       - else
+/         %option{ :value => '/catalogs/' + c.id.to_s}= c.title
+- content_for :catalogs_selector do
+	%ul.nav
+		%li.dropdown
+			%a.dropdown-toggle{"data-toggle" => "dropdown", :href => "#"}
+				Kataloge
+				%b.caret
+				%ul.dropdown-menu
+					-Catalog.all.each do  |catalog|
+						%li
+							=link_to catalog.title, catalog_path(catalog)
 - content_for :tray do
-  =render :partial => "shared/tray"
+	=render :partial => "shared/tray"
+	
+				
+
 
 =render :template => 'layouts/application'
