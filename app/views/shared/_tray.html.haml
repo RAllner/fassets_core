@@ -13,4 +13,4 @@
         -else
           =render :partial => "shared/asset", :locals => {:tp => tp, :asset => tp.asset}
       %ul#create_links
-        %li=button_to "New Asset", :new_asset_path, remote: true
+        %li=button_to "New Asset", :new_asset_path, :remote => true
