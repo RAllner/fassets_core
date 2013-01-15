@@ -2,7 +2,7 @@ class AssetsController < FassetsCore::ApplicationController
   include AssetsHelper
   before_filter :authenticate_user!, :except => [:show]
   before_filter :find_content, :except => [:new, :create, :classifications]
-
+  respond_to :html, :js
   def new
     if self.respond_to?(:content_model)
       @content = self.content_model.new
@@ -16,7 +16,8 @@ class AssetsController < FassetsCore::ApplicationController
       end
     end
     respond_to do |format|
-      format.html { render :template => 'assets/new', :layout => !(params["content_only"]) }
+      format.js { render :template => 'assets/new', :layout => !(params["content_only"]) }
+      #format.html { render :template => 'assets/new', :layout => !(params["content_only"]) }
     end
   end
   def create
