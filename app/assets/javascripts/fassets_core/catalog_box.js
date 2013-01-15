@@ -1,30 +1,30 @@
 $(document).ready(function(){
-  var show_catalog = function() {
-    $.fancybox.showActivity();
-    var f_width = $(window).width()*0.8;
-    var f_height = $(window).height()*0.8;
-    $("#box_content").css("left",$("#catalog_list").width()+10);
-    $("#box_content").css("width",$("#fancybox-content").width()-$("#catalog_list").width()-30-$("#facets").width());
-	  $.ajax({
-		  type		: "GET",
-		  cache	: false,
-		  url		: "/catalog_box",
-		  success: function(data) {
-			  $.fancybox({
-          content: data,
-          padding: 0,
-          autoDimensions: false,
-          width: f_width,
-          height: f_height,
-          onComplete: function(){$("#fancybox-content").attr("box_type","catalog");}
-        });
-        $("#box_content").css("left",$("#catalog_list").width()+10);
-        $("#box_content").css("width",$("#fancybox-content").width()-$("#catalog_list").width()-30-$("#fancybox-content #sidebar").width());
-        fancybox_links();
-        $.fancybox.resize();
-		  }
-	  });
-  };
+  // var show_catalog = function() {
+  //   $.fancybox.showActivity();
+  //   var f_width = $(window).width()*0.8;
+  //   var f_height = $(window).height()*0.8;
+  //   $("#box_content").css("left",$("#catalog_list").width()+10);
+  //   $("#box_content").css("width",$("#fancybox-content").width()-$("#catalog_list").width()-30-$("#facets").width());
+	 //  $.ajax({
+		//   type		: "GET",
+		//   cache	: false,
+		//   url		: "/catalog_box",
+		//   success: function(data) {
+		// 	  $.fancybox({
+  //         content: data,
+  //         padding: 0,
+  //         autoDimensions: false,
+  //         width: f_width,
+  //         height: f_height,
+  //         onComplete: function(){$("#fancybox-content").attr("box_type","catalog");}
+  //       });
+  //       $("#box_content").css("left",$("#catalog_list").width()+10);
+  //       $("#box_content").css("width",$("#fancybox-content").width()-$("#catalog_list").width()-30-$("#fancybox-content #sidebar").width());
+  //       fancybox_links();
+  //       $.fancybox.resize();
+		//   }
+	 //  });
+  // };
   $(window).keydown(function(event){
     switch(event.keyCode) {
     case 67: // c

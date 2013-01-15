@@ -1,4 +1,7 @@
 - if user_signed_in?
+  -content_for :tray_count do
+    %h3=current_user.tray_positions.length
+  
   =form_tag main_app.replace_user_tray_positions_path(current_user),
     :data => { :user_id => current_user.id },
     :id => "tray",
