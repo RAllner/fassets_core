@@ -2,7 +2,6 @@ class AssetsController < FassetsCore::ApplicationController
   include AssetsHelper
   before_filter :authenticate_user!, :except => [:show]
   before_filter :find_content, :except => [:new, :create, :classifications]
-
   def new
     if self.respond_to?(:content_model)
       @content = self.content_model.new
@@ -15,8 +14,10 @@ class AssetsController < FassetsCore::ApplicationController
         @content = type[:class].new
       end
     end
-    respond_to do |format|
-      format.html { render :template => 'assets/new', :layout => !(params["content_only"]) }
+      respond_to do |format|
+      format.js 
+      format.html
+      #format.html { render :template => 'assets/new', :layout => !(params["content_only"]) }
     end
   end
   def create
@@ -27,7 +28,7 @@ class AssetsController < FassetsCore::ApplicationController
         @classification = Classification.new(:catalog_id => params["classification"]["catalog_id"],:asset_id => @content.asset.id)
         @classification.save
         flash[:notice] = "Created new asset!"
-        format.js { render :nothing => true }
+        format.js { render 'assets/new' }
         format.html { redirect_to edit_asset_content_path(@content) }
       else
         flash[:error] = "Could not create asset!"

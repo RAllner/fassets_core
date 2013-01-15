@@ -7,25 +7,25 @@
 
 
 $(document).ready(function(){
-  var show_asset_box = function() {
-    $.fancybox.showActivity();
-    var f_width = $(window).width()*0.8;
-    var f_height = $(window).height()*0.8;
-    $.ajaxSetup({cache: false});
-    $.get('/assets/new', { content_only: true }, function(data) {
-      $.fancybox({
-        content: data,
-        padding: 0,
-        autoDimensions: false,
-        width: f_width,
-        height: f_height,
-        onComplete: function(){
-          $("#fancybox-content").data("box-type","add_asset");
-          $.fancybox.resize();
-        }
-      });
-    });
-  };
+  // var show_asset_box = function() {
+  //   $.fancybox.showActivity();
+  //   var f_width = $(window).width()*0.8;
+  //   var f_height = $(window).height()*0.8;
+  //   $.ajaxSetup({cache: false});
+  //   $.get('/assets/new', { content_only: true }, function(data) {
+  //     $.fancybox({
+  //       content: data,
+  //       padding: 0,
+  //       autoDimensions: false,
+  //       width: f_width,
+  //       height: f_height,
+  //       onComplete: function(){
+  //         $("#fancybox-content").data("box-type","add_asset");
+  //         $.fancybox.resize();
+  //       }
+  //     });
+  //   });
+  // };
   $(window).keydown(function(event){
     switch(event.keyCode) {
     case 65: // a
@@ -57,8 +57,8 @@ $(document).ready(function(){
   };
 
   adjust_links();
-  $("#new_asset_link").click(function(event){
-    event.preventDefault();
-    show_asset_box();
-  });
+  // $("#new_asset_link").click(function(event){
+  //   event.preventDefault();
+  //   show_asset_box();
+  // });
 });

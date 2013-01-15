@@ -73,7 +73,7 @@ class TrayPositionsController < FassetsCore::ApplicationController
         end
       end
       format.html do
-        #redirect_to :back
+        redirect_to root_path
       end
     end
   end
