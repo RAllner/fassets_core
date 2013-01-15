@@ -28,6 +28,6 @@ Rails.application.routes.draw do
   match 'catalog_box' => 'Catalogs#catalog_box'
   match 'box_content' => 'Catalogs#box_content'
   match 'box_facet' => 'Catalogs#box_facet'
-  match 'assets/:asset_id/edit' => 'assets#edit'
+  match 'assets/:asset_id/edit' => 'assets#edit', as: :edit_asset_path
   match 'assets/new' => 'assets#new', as: :new_asset_path
 end

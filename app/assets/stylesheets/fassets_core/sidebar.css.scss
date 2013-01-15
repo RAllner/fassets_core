@@ -1,14 +1,14 @@
 #sidebar {
   float: right;
   right: 0%;
-  width: 100%;
+  width: 25%;
   height: 100%;
 
   .classification_form {
     width: 100%;
     margin-bottom: 1em;
     margin-right: .5em;
-    height: 120px;
+    height: 95px;
     background-color: #888888;
     border: 2px solid #777777;
     border-radius: 5px;
@@ -73,8 +73,8 @@
       li.classification {
         margin-left: .5em;
         margin-bottom: .5em;
-        background-color: #666666;
-        border: 2px solid #555555;
+        // background-color: #666666;
+        // border: 2px solid #555555;
         border-radius: 5px;
       }
     }
