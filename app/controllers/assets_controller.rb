@@ -45,7 +45,11 @@ class AssetsController < FassetsCore::ApplicationController
     render :template => 'assets/show'
   end
   def edit
-    render :template => 'assets/edit', :layout => !(params["content_only"])
+   respond_to do |format|
+      format.js 
+      format.html
+    end
+    # render :template => 'assets/edit', :layout => !(params["content_only"])
   end
   def update
     @content.update_attributes(content_params)
