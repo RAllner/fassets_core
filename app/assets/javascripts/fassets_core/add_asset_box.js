@@ -26,6 +26,7 @@ $(document).ready(function(){
   //     });
   //   });
   // };
+
   $(window).keydown(function(event){
     switch(event.keyCode) {
     case 65: // a

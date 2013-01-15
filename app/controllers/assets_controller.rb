@@ -2,6 +2,7 @@ class AssetsController < FassetsCore::ApplicationController
   include AssetsHelper
   before_filter :authenticate_user!, :except => [:show]
   before_filter :find_content, :except => [:new, :create, :classifications]
+
   def new
     if self.respond_to?(:content_model)
       @content = self.content_model.new
@@ -20,6 +21,7 @@ class AssetsController < FassetsCore::ApplicationController
       #format.html { render :template => 'assets/new', :layout => !(params["content_only"]) }
     end
   end
+
   def create
     @content = self.content_model.new(content_params)
     @content.asset = Asset.create(:user => current_user, :name => params["asset"]["name"])
