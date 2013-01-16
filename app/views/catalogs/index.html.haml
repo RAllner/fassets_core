@@ -1,7 +1,17 @@
-#sidebar.fassets_core
+
+.span8.pagination-centered
+  -if user_signed_in?
+    .leaderboard
+      %h1 Willkommen
+      %p
+        Möchten sie einen Katalog anlegen?
+      %a.btn.btn-primary.btn-large{}
+        %i.icon-user.icon-white
+          Katalog erstellen
+.span4
   -if user_signed_in?
     .collapsible
-      %h2.title New Catalog
+      %h2.title Catalog
       =form_for Catalog.new, :url => catalogs_path, :remote => true do |f|
         =render :partial => "form", :object => f
         =submit_tag "Create"
@@ -11,6 +21,4 @@
         %li
           =link_to(catalog.title, catalog_path(catalog))
           .content=catalog.info
-
-#main
 

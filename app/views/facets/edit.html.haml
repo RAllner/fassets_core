@@ -7,9 +7,12 @@
     =@facet.caption
   #action
     =button_to "Delete", catalog_facet_path(@catalog, @facet), :method => :delete, :onclick => "return confirm('Are you sure?')"
-#sidebar.fassets_core=render "labels/sidebar"
 
-#main.fassets_core
+.span8
+  %h2 Edit Facet
   =form_for [@catalog, @facet], :url => catalog_facet_path(@catalog,@facet) do |f|
     =render :partial => "form", :object => f
     =submit_tag "Save"
+
+.span4
+  =render "labels/sidebar"

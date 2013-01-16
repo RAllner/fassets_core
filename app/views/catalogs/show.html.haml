@@ -5,7 +5,24 @@
     -if user_signed_in?
       %span.action
         =link_to image_tag("fassets_core/edit.png"), edit_catalog_path(@catalog)
-#sidebar.fassets_core
+
+.span8
+  -if @filter.empty?
+    %h2 Assets
+  -else
+    %h2
+      Filtered Assets
+    #filter
+      %ul
+        %li.item
+          %strong{:class => filter_item.facet.color}="#{filter_item.facet.caption}: #{filter_item.caption}"
+          =link_to "drop", catalog_path(@catalog, :filter => @filter.to_query_exclude(filter_item.id))
+        =render :partial => "filter_item", :collection => Label.in(@filter)
+        %li{:style => "clear:both"}=link_to "clear filter", catalog_path(@catalog), :class => "icon remove"
+  %ul#assets
+    =render :partial => "shared/asset", :collection => @assets, :locals => {:tp => nil}
+
+.span4
   -if user_signed_in?
     .collapsible
       %h2.title Add Facet
@@ -14,17 +31,3 @@
         =submit_tag "Create"
   %ol#facets{"data-update-url" => sort_catalog_facets_url(@catalog)}
     =render :partial => "facet", :collection => @catalog.facets.all(:order => "position ASC")
-
-#catalog_main
-  -if @filter.empty?
-    %h2 Assets
-  -else
-    %h2
-      Filtered Assets
-    #filter
-      %ul
-        =render :partial => "filter_item", :collection => Label.in(@filter)
-        %li{:style => "clear:both"}=link_to "clear filter", catalog_path(@catalog), :class => "icon remove"
-  %ul#assets
-    =render :partial => "shared/asset", :collection => @assets, :locals => {:tp => nil}
-

@@ -1,10 +1,8 @@
 .labels
-  %h2.title Labels
-  .collapsible
-    %h2.title New Label
-    =form_for [@catalog, @facet, Label.new] do |f|
-      =render :partial => "labels/form", :object => f
-      =submit_tag "Create"
+  %h2.title New Label
+  =form_for [@catalog, @facet, Label.new] do |f|
+    =render :partial => "labels/form", :object => f
+    =submit_tag "Create"
 
   %ol.collection{:class => @facet.label_order == 'position' ? "sortable" : nil,
     :id => "labels",

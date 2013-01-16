@@ -31,7 +31,7 @@ class FacetsController < FassetsCore::ApplicationController
     @facet = @catalog.facets.find(params[:id])
     if @facet.update_attributes(params[:facet])
       flash[:notice] = "Facet has been updated."
-      redirect_to  edit_catalog_facet_path(@catalog, @facet)
+      redirect_to  catalog_path(@catalog)
     else
       render :action => 'edit'
     end
