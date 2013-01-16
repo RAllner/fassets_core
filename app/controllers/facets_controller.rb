@@ -3,6 +3,10 @@ class FacetsController < FassetsCore::ApplicationController
   before_filter :find_catalog
 
   def new
+    respond_to do |format|
+      format.js 
+      format.html 
+    end
   end
   def create
     @facet = Facet.new(params[:facet])

@@ -1,0 +1,3 @@
+=form_for [@catalog, Facet.new], :url => catalog_facets_path(@catalog, Facet.new) do |f|
+  =render :partial => "facets/form", :object => f
+  =submit_tag "Create", class: "btn"

@@ -24,10 +24,11 @@
 
 .span4
   -if user_signed_in?
+    =button_to "Add Facet", :new_facet_path, :remote => true, class: "btn"
     .collapsible
       %h2.title Add Facet
       =form_for [@catalog, Facet.new], :url => catalog_facets_path(@catalog, Facet.new) do |f|
         =render :partial => "facets/form", :object => f
-        =submit_tag "Create"
+        =submit_tag "Create", class: "btn"
   %ol#facets{"data-update-url" => sort_catalog_facets_url(@catalog)}
     =render :partial => "facet", :collection => @catalog.facets.all(:order => "position ASC")
