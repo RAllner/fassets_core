@@ -1,6 +1,5 @@
-
-.span8.pagination-centered
-  -if user_signed_in?
+-if user_signed_in?
+  .span8.pagination-centered
     .leaderboard
       %h1 Willkommen
       %p
@@ -8,17 +7,19 @@
       %a.btn.btn-primary.btn-large{}
         %i.icon-user.icon-white
           Katalog erstellen
-.span4
-  -if user_signed_in?
-    .collapsible
-      %h2.title Catalog
-      =form_for Catalog.new, :url => catalogs_path, :remote => true do |f|
-        =render :partial => "form", :object => f
-        =submit_tag "Create"
-  #catalogs_list
-    %ul.collection
-      -Catalog.all.each do |catalog|
-        %li
-          =link_to(catalog.title, catalog_path(catalog))
-          .content=catalog.info
+
+  .span4
+    =button_to "New Catalog", :new_catalog_path, :remote => true
+    #catalogs_list
+      %ul.collection
+        -Catalog.all.each do |catalog|
+          %li
+            =link_to(catalog.title, catalog_path(catalog))
+            .content=catalog.info
+-else
+  .span12.pagination-centered
+    .leaderboard
+      %img{:rel => "fassets_logo", :src => "#{asset_path('fassets_horizontal_white.png')}", :width => "400px"}
+
+
 

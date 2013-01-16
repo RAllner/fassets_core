@@ -1,0 +1,6 @@
+$("#modal-window").modal();
+$("#modal-window .modal-header h3").html("New Catalog");
+//for some reason the render method only finds a partial here, not a normal template...
+$("#modal-window .modal-body").html('<%= j render "catalogs/new" %>');
+$("#modal-window .modal-footer").hide();
+

@@ -30,4 +30,5 @@ Rails.application.routes.draw do
   match 'box_facet' => 'Catalogs#box_facet'
   match 'assets/:asset_id/edit' => 'assets#edit', as: :edit_asset_path
   match 'assets/new' => 'assets#new', as: :new_asset_path
+  match 'catalogs/new' => 'Catalogs#new', as: :new_catalog_path
 end

@@ -1,7 +1,7 @@
 class CatalogsController < FassetsCore::ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
-
   before_filter :find_catalog, :except => [:index, :new, :create, :add_asset, :catalog_box]
+
   def index
     @catalogs = Catalog.all
   end
@@ -13,6 +13,9 @@ class CatalogsController < FassetsCore::ApplicationController
   end
   def new
     @catalog = Catalog.new
+    respond_to do |format|
+      format.js 
+    end
   end
   def create
     @catalog = Catalog.new(params[:catalog])
