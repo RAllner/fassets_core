@@ -1,22 +1,25 @@
--unless new
-  #edit_header
-    #content
-      #messages
-      #type
-        =@content.media_type.capitalize
-      #action
-        %span.action
-          =button_to "Delete", asset_content_path(@content),
-            :method => :delete,
-            :confirm => "Are you sure?",
-            :class => "delete_asset_button",
-            :remote => true
-          =render :partial => "assets/put_on_tray"
-          =render :partial => "#{@content.class.to_s.underscore.pluralize}/actions" rescue nil
-  #asset_preview
-    =render :partial => content_partial(@content, :preview), :locals => {:content => @content}
+.span
+  -unless TrayPosition.where(:asset_id => @content.asset.id, :user_id => current_user.id).exists?
+    -tp = TrayPosition.new(:asset_id => @content.asset.id, :user_id => current_user.id)
+    =form_for [current_user, tp], :url => main_app.user_tray_positions_path(current_user,tp), :html => {:class => "inline"} do |f|
+      =f.hidden_field :asset_id
+      =f.hidden_field :user_id
 
-#asset_form
+    
+  .btn-group
+    =link_to "Delete", asset_content_path(@content),
+      :method => :delete,
+      :confirm => "Are you sure?",
+      :class => "delete_asset_button btn",
+      :remote => true
+    =submit_tag "-> Tray", :class => "put_on_tray_button btn", :data => { :asset_id => @content.asset.id, :user_id => current_user.id }
+    =render asset_file_path(@content, 'actions')
+    / =render :partial => "assets/put_on_tray"
+    / =submit_tag "-> Tray", :class => "put_on_tray_button btn", :data => { :asset_id => @content.asset.id, :user_id => current_user.id }
+    / #asset_preview
+    / =render :partial => content_partial(@content, :preview), :locals => {:content => @content}
+
+.span  
   =form_for @content, :url => asset_content_path(@content), :html => {:class => "fassets_core asset_form"}, :remote => true do |f|
     =render :partial => "shared/error", :locals => {:target => @content}
     =fields_for "asset", @content.asset do |asset|
@@ -26,6 +29,6 @@
         %span#asset_name.errors
     =render :partial => "#{@content.class.to_s.underscore.pluralize}/form", :locals => {:new => new}, :object => f
     =submit_tag @content.new_record? ? "Create" : "Save",
-      :class => "asset_submit_button",
+      :class => "asset_submit_button btn btn-success",
       :data => { :asset_id => @content.asset.id, :asset_type => @content.asset.content_type, :content_id => @content.id }
 
