@@ -1,12 +1,13 @@
 .labels
-  %h2.title New Label
+  %h3.title New Label
   =form_for [@catalog, @facet, Label.new] do |f|
     =render :partial => "labels/form", :object => f
-    =submit_tag "Create"
+    
 
-  %ol.collection{:class => @facet.label_order == 'position' ? "sortable" : nil,
+  %ol.inline.collection{:class => @facet.label_order == 'position' ? "sortable" : nil,
     :id => "labels",
     :data => {:update_url => sort_catalog_facet_labels_path(@catalog, @facet)}}
+    
     -@facet.ordered_labels.each do |label|
       %li{:id => "label_#{label.id}"}
         %span.content
@@ -15,6 +16,7 @@
             :confirm => 'Are you sure?',
             :method => "delete",
             :remote => true,
-            :disable_with => 'loading...'
+            :disable_with => 'loading...',
+            class: "btn"
         - if @facet.label_order == 'position'
           %span.handle= image_tag "fassets_core/drag.png"

@@ -1,9 +1,14 @@
-%p
-  %label{:for => 'caption'} Caption:
-  =text_field :facet, :caption
-%p
-  %label{:for => 'order'} Label Order:
-  =select(:facet, :label_order, Facet::LABEL_ORDER)
-%p
-  %label{:for => 'color'} Color:
-  =select(:facet, :color, %w(red orange yellow green blue violet gray))
+.form.form-horizontal
+  .control-group
+    %label.control-label{:for => 'facet_caption'} Facet Caption:
+    .controls
+      =text_field :facet, :caption
+  .control-group
+    %label.control-label{:for => 'facet_label_order'} Label Order:
+    .controls
+      =select(:facet, :label_order, Facet::LABEL_ORDER)
+  .control-group
+    %label.control-label{:for => 'facet_color'} Color:
+    .controls
+      =select(:facet, :color, %w(red orange yellow green blue violet gray))
+   

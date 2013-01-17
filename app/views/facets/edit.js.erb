@@ -1,5 +1,5 @@
 $("#modal-window").modal();
-$("#modal-window .modal-header h3").html("New Facet");
+$("#modal-window .modal-header h3").html("Edit Facet");
 //for some reason the render method only finds a partial here, not a normal template...
-$("#modal-window .modal-body").html('<%= j render "facets/new" %>');
+$("#modal-window .modal-body").html('<%= j render "facets/edit" %>');
 $("#modal-window .modal-footer").hide();
