@@ -20,14 +20,14 @@ class FacetsController < FassetsCore::ApplicationController
       else
         flash[:error] = "Facet could not be created!"
       end      
-      redirect_to :back
+      render nothing: true
     end
   end
   def edit
     @facet = @catalog.facets.find(params[:id])
     respond_to do |format|
       format.js 
-      format.html 
+      format.html {redirect_to :back}
     end
   end
   def update
