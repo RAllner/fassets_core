@@ -10,7 +10,8 @@
         =button_to "Edit", "/assets/#{asset.id}/edit",
           :remote => true,
           :class => "edit_button",
-          :data => {:asset_id => asset.id, :content_id => asset.content_id}
+          :data => {:asset_id => asset.id, :content_id => asset.content_id},
+          method: :get
         =#image_tag "fassets_core/drag.png", :width => 12, :height => 13, :class => "handle"
         -if tp
           =button_to "Drop", main_app.user_tray_position_path(current_user,tp.id),
