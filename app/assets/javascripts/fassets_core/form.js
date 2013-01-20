@@ -1,3 +1,7 @@
+/*
+This class tries to implement error handling for ajax requests, we dont need it right now
+
+*/
 $(document).ready(function(){
   $(document).bind('ajax:success', function(evt, xhr, status){
     reload_tray();

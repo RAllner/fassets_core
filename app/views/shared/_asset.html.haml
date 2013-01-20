@@ -1,7 +1,7 @@
 %li.asset{:id => tp ? "tp_#{tp.id}" : "asset_#{asset.id}", :rel => tp ? asset.id : nil, :data => { 'asset-id' => asset ? asset.id: nil}}
   .asset_content
-    .icon
-      =render :partial => content_partial(asset.content, :icon), :locals => {:content => asset.content}
+    -#.icon
+    -#  =render :partial => content_partial(asset.content, :icon), :locals => {:content => asset.content}
     .caption
       =link_to truncate(asset.name,:length => 13,:omission => "..."), asset_content_path(asset.content), :class => "caption"
   .asset_actions

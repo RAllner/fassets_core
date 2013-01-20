@@ -4,12 +4,17 @@ source "http://rubygems.org"
 # Bundler will treat runtime dependencies like base dependencies, and
 # development dependencies will be added by default to the :development group.
 gemspec
+#####development dependencies, later on this is moved to the gemspec -->
+gem 'formtastic'
+
+#<---
+
+
 
 # gems used by dummy application
 gem "jquery-rails"
 gem "haml"
 gem "devise"
-
 gem 'rb-inotify', '~> 0.8.8'
 
 # Declare any dependencies that are still in development here instead of in

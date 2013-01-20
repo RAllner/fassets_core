@@ -15,7 +15,7 @@
 				Kataloge
 				%b.caret
 				%ul.dropdown-menu
-					%li=link_to "Create Catalog", :new_catalog_path, :remote => true
+					%li=link_to "Create Catalog", new_catalog_path, :remote => true
 					%li.divider
 					-Catalog.all.each do  |catalog|
 						%li

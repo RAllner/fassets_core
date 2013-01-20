@@ -1,9 +1,10 @@
 class CatalogsController < FassetsCore::ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
   before_filter :find_catalog, :except => [:index, :new, :create, :add_asset, :catalog_box]
-
+  respond_to :html, :js
   def index
     @catalogs = Catalog.all
+    respond_with @catalogs
   end
   def show
     @filter = LabelFilter.new(params[:filter])
