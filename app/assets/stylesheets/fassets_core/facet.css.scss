@@ -1,4 +1,4 @@
-.facet{
+#sidebar .facet{
   margin-bottom: 1em;
   margin-left: 0.5em;
   margin-right: 0.5em;
@@ -6,11 +6,9 @@
   -webkit-border-radius: 5px;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  list-style: none;
-  
-  ul ol {
+
+  ul {
     padding: .3em;
-    margin: 0 0 0 0;
   }
 
   .action {
@@ -21,10 +19,7 @@
     display: inline-block;
     padding-right: .8em;
     white-space: nowrap;
-  	background-color: transparent;
-  	border: 1px;
-  	border-style: solid;
-  	border-color: #FFFFFF;
+  
     .count {
       font-size: .8em;
     }
