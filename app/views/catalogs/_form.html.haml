@@ -1,7 +1,10 @@
-%p
-  %label{:for => 'title'} Title:
-  =text_field :catalog, :title
-  %span#title.errors
-%p
-  %label{:for => 'info'} Info:
-  =text_area :catalog, :info, :rows => 4
+.form.form-horizontal
+  .control-group
+    %label.control-label{:for => 'catalog_title'} Title:
+    .controls
+      =text_field :catalog, :title
+      %span#title.errors
+  .control-group
+    %label.control-label{:for => 'catalog_info'} Info:
+    .controls
+      =text_area :catalog, :info, :rows => 4

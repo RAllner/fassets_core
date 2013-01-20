@@ -16,5 +16,8 @@ module AssetsHelper
   def edit_asset_content_path(content)
     asset_content_path(content) + "/edit"
   end
+  def asset_file_path(content, file)
+    content.class.to_s.underscore.pluralize+"/"+file.to_s
+  end
 end
 

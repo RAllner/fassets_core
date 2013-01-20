@@ -24,11 +24,7 @@
 
 .span4
   -if user_signed_in?
-    =button_to "Add Facet", new_catalog_facet_path(@catalog, Facet.new), :remote => true, class: "btn", method: :get
-    .collapsible
-      %h2.title Add Facet
-      =form_for [@catalog, Facet.new], remote:true do |f|
-        =render :partial => "facets/form", :object => f
-        =submit_tag "Create", class: "btn"
-  %ol#facets{"data-update-url" => sort_catalog_facets_url(@catalog)}
-    =render :partial => "facet", :collection => @catalog.facets.all(:order => "position ASC")
+    %h2.titel Facets  
+    %ol#facets{"data-update-url" => sort_catalog_facets_url(@catalog)}
+      =render :partial => "facet", :collection => @catalog.facets.all(:order => "position ASC")
+    =button_to "Add Facet", new_catalog_facet_path(@catalog, Facet.new), :remote => true, class: "btn btn-success", method: :get

@@ -1,29 +1,29 @@
-%p Bitte geben sie ihre Änderungen an.
+/ %p Bitte geben sie ihre Änderungen an.
 
-%form.form-horizontal
-  .control-group
-    %label.control-label{:for => "titellabel"} Titel
-    .controls
-      %input#inputEmail{:placeholder => "Titel", :type => "text"}
-  .control-group
-    %label.control-label{:for => "fassettenlabel"} Fassetten
-    .controls
-      %input#inputPassword{:placeholder => "Fassetten", :type => "text"}
-  .control-group
-    %label.control-label{:for => "templatelabel"} Template
-    .controls
-      %select
-        %option Xmendel-Template
-        %option UzL-Template
-        %option Fassets-Template
-  .control-group
-    .controls
-      %button.btn.btn-success{:type => "submit"} Übernehmen
-      %button.btn{:type => "abbort","data-dismiss" => "modal", :href => "#",} Abbrechen      
+/ %form.form-horizontal
+/   .control-group
+/     %label.control-label{:for => "titellabel"} Titel
+/     .controls
+/       %input#inputEmail{:placeholder => "Titel", :type => "text"}
+/   .control-group
+/     %label.control-label{:for => "fassettenlabel"} Fassetten
+/     .controls
+/       %input#inputPassword{:placeholder => "Fassetten", :type => "text"}
+/   .control-group
+/     %label.control-label{:for => "templatelabel"} Template
+/     .controls
+/       %select
+/         %option Xmendel-Template
+/         %option UzL-Template
+/         %option Fassets-Template
+/   .control-group
+/     .controls
+/       %button.btn.btn-success{:type => "submit"} Übernehmen
+/       %button.btn{:type => "abbort","data-dismiss" => "modal", :href => "#",} Abbrechen      
 
 
-/ #sidebar.fassets_core
-/   =render :partial => "assets/classification", :locals => {:asset => @content.asset}
-/   =render :partial => "#{@content.class.to_s.underscore.pluralize}/sidebar"
-/ #main.fassets_core
-/   =render :partial => "assets/form", :locals => {:new => false}
+=render :partial => "assets/form", :locals => {:new => false}
+
+=render :partial => "assets/classification", :locals => {:asset => @content.asset}
+/ .row
+/ 	=render :partial => "#{@content.class.to_s.underscore.pluralize}/sidebar"

@@ -15,8 +15,8 @@
             -#=link_to(catalog.title, catalog_path(catalog))
             .content=catalog.info
             =link_to(catalog.title, catalog_path(catalog))
-    =button_to "Create Catalog", new_catalog_path, :remote => true, class: "btn"
+    =button_to "Create Catalog", :new_catalog_path, :remote => true, class: "btn btn-success"
 -else
   .span12.pagination-centered
     .leaderboard
-      %img{:rel => "fassets_logo", :src => "#{asset_path('fassets_horizontal_white.png')}", :width => "400px"}
+      %img{:rel => "fassets_logo", :src => "#{asset_path('fassets_horizontal.png')}", :width => "600px"}
