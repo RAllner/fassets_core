@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $("#sidebar .classification_create").live("click",function(event){
+    $("#sidebar .classification_create").on("click",function(event){
       event.preventDefault();
       $.fancybox.showActivity();
       var catalog_id = $("#fancybox-content #classification_catalog_id :selected").val();
@@ -15,7 +15,7 @@ $(document).ready(function(){
       $.fancybox.resize();;
       $.fancybox.hideActivity();
     });
-    $("#sidebar .classification_drop").live("click",function(event){
+    $("#sidebar .classification_drop").on("click",function(event){
       event.preventDefault();
       if (confirm("Are you sure?") == false){
         return;

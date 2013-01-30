@@ -1,11 +1,11 @@
 $(document).ready(function(){
-  $(".asset").live("mouseenter",function(event){
+  $(".asset").on("mouseenter",function(event){
     $(this).find(".asset_actions").fadeIn(150);
   });
-  $(".asset").live("mouseleave",function(event){
+  $(".asset").on("mouseleave",function(event){
     $(this).find(".asset_actions").fadeOut(100);
   });
-  $(".put_on_tray_button").live("click", function(event){
+  $(".put_on_tray_button").on("click", function(event){
     event.preventDefault();
     var user_id = $(event.target).data("user-id");
     var asset_id = $(event.target).data("asset-id");
